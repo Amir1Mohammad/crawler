@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Omid</title>
+</head>
+
+<body>
+{% block content %}
+
+<div align="center">
+    When you ready to Boom . click start ?
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>{{ form.power }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </div>
+{% endblock %}
+</body>
+</html>
