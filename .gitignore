@@ -20,6 +20,8 @@ lib64/
 parts/
 sdist/
 var/
+.idea
+idea/
 wheels/
 *.egg-info/
 .installed.cfg
@@ -27,6 +29,9 @@ wheels/
 *.db
 *.sqlite
 *.csv
+*.xml
+*iml
+
 sms.py
 environ.py
 # PyInstaller
