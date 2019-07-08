@@ -24,6 +24,9 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.db
+*.sqlite
+*.csv
 sms.py
 environ.py
 # PyInstaller
