@@ -15,8 +15,8 @@ __Author__ = "Amir Mohammad"
 
 @app.route('/')
 def index():
-    return "<h1>Hello Baby . We want to do great and Big! things</h1>"
-
+    # return "<h1>Hello Baby . We want to do great and Big! things</h1>"
+    return redirect('/scrape')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

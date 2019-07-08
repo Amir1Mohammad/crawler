@@ -18,4 +18,5 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 
 
+
 from controller import user, basket
