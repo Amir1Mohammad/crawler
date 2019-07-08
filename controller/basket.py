@@ -41,50 +41,37 @@ def find_announcement():
                 title = jsonify_new_url['data']['seo']['title']
                 desc = jsonify_new_url['data']['seo']['description']
 
-                print('the json recieved =======================')
-
-                # print(jsonify_new_url['widgets']['list_data'][value]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value]['value'])  # metrage
-
                 if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
                     size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
+                else:
+                    size_amount = '0'
 
                 if jsonify_new_url['widgets']['list_data'][value - 1]['title'] == 'تعداد اتاق':
                     rooms_num = jsonify_new_url['widgets']['list_data'][value - 1]['value']
+                else:
+                    rooms_num = 0
 
                 if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
                     build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
+                else:
+                    build_year = 0
 
                 if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
-                    type = jsonify_new_url['widgets']['list_data'][value - 4]['value']
-
-                print('the announcement recieved')
-
-                # print(jsonify_new_url['widgets']['list_data'][value - 1]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value - 1]['value'])  # tedad otagh
-                # print(jsonify_new_url['widgets']['list_data'][value - 3]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value - 3]['value'])  # sal sakht
-                # print(jsonify_new_url['widgets']['list_data'][value - 4]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value - 4]['value'])  # noe agahi
+                    type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
+                else:
+                    type_ = 'none'
 
                 get_contact = requests.get(new_url + '/contact')
                 phone_number = get_contact.json()['widgets']['contact']['phone']
-                print('The contact recived =======================')
-
                 announcement_obj = Announcement(title=title, description=desc, mobile_number=phone_number,
-                                                size_amount=size_amount, type=type, build_year=build_year,
+                                                size_amount=size_amount, type=type_, build_year=build_year,
                                                 rooms_num=rooms_num, market="Divar")
-
-                # announcement_obj = Announcement(id=2, title='title', description='desc', mobile_number=phone_number,
-                #                                 size_amount='size_amount', type='type', build_year='build_year',
-                #                                 rooms_num='rooms_num', market="Divar")
 
                 db.session.add(announcement_obj)
                 db.session.commit()
-
-                # print('phone_number is : ', phone_number)
-                print('========================================================')
-                # time.sleep(11)
+                print('Added Done with information', title, desc, phone_number,
+                      size_amount, type_, build_year, rooms_num, "In divar")
+                time.sleep(10)
 
             except:
                 value = 5
@@ -95,50 +82,37 @@ def find_announcement():
                 title = jsonify_new_url['data']['seo']['title']
                 desc = jsonify_new_url['data']['seo']['description']
 
-                print('the json recieved =======================')
-
-                # print(jsonify_new_url['widgets']['list_data'][value]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value]['value'])  # metrage
-
                 if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
                     size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
+                else:
+                    size_amount = 0
 
                 if jsonify_new_url['widgets']['list_data'][value - 1]['title'] == 'تعداد اتاق':
                     rooms_num = jsonify_new_url['widgets']['list_data'][value - 1]['value']
+                else:
+                    rooms_num = 0
 
                 if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
                     build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
+                else:
+                    build_year = 0
 
                 if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
-                    type = jsonify_new_url['widgets']['list_data'][value - 4]['value']
-
-                print('the announcement recieved')
-                # print(jsonify_new_url['widgets']['list_data'][value - 1]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value - 1]['value'])  # tedad otagh
-                # print(jsonify_new_url['widgets']['list_data'][value - 3]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value - 3]['value'])  # sal sakht
-                # print(jsonify_new_url['widgets']['list_data'][value - 4]['title'], '== ',
-                #       jsonify_new_url['widgets']['list_data'][value - 4]['value'])  # noe agahi
+                    type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
+                else:
+                    type_ = 'none'
 
                 get_contact = requests.get(new_url + '/contact')
                 phone_number = get_contact.json()['widgets']['contact']['phone']
-                # print('phone_number is : ', phone_number)
-                print('The contact recived =======================')
-                # announcement_obj = Announcement(id=that_id, title=title, description=desc, mobile_number=phone_number,
-                #                                 size_amount=size_amount, type=type, build_year=build_year,
-                #                                 rooms_num=rooms_num, market="Divar")
 
-                announcement_obj = Announcement(title='title', description='desc',
-                                                mobile_number=phone_number,
-                                                size_amount='size_amount', type='type', build_year='build_year',
-                                                rooms_num='rooms_num', market="Divar")
+                announcement_obj = Announcement(title=title, description=desc, mobile_number=phone_number,
+                                                size_amount=size_amount, type=type_, build_year=build_year,
+                                                rooms_num=rooms_num, market="Divar")
 
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('Added Done with information', id, title, desc, phone_number,
-                      size_amount, type, build_year, rooms_num, "In divar")
-                # time.sleep(11)
-
-        return "<h1>Done man</h1>"
+                print('Added Done with information', title, desc, phone_number,
+                      size_amount, type_, build_year, rooms_num, "In divar")
+                time.sleep(10)
 
     return render_template('basket.html', form=form)
