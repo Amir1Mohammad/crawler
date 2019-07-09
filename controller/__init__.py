@@ -18,4 +18,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 
-from controller import user, basket, api, errors
+from controller import user, scraper, api, errors
