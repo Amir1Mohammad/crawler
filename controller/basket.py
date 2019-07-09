@@ -10,6 +10,7 @@ from flask import render_template
 
 # Project imports
 from controller import app, db
+from controller.sms import SMSAdapter
 from form.option import OptionBazaar
 from controller.requests_handling import data, headers, urls
 from model.announcement import Announcement
@@ -24,14 +25,14 @@ def find_announcement():
 
     search_url = urls[0]
     form = OptionBazaar()
-
+    adapter = SMSAdapter()
     if form.validate_on_submit() and form.power.data:
 
         print('button submitted ======================')
         first_request = requests.post(search_url, data=json.dumps(data), headers=headers)
         detail_first_request = first_request.json()['result']['post_list']
         for each in detail_first_request:
-
+            time.sleep(10)
             try:
                 value = 6
                 new_url = 'https://api.divar.ir/v5/posts/' + each['token']
@@ -69,9 +70,13 @@ def find_announcement():
 
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('Added Done with information', title, desc, phone_number,
+                print('>>>> Added Done with information : ', title, desc, phone_number,
                       size_amount, type_, build_year, rooms_num, "In divar")
-                time.sleep(10)
+                # adapter.send_link_divar(phone_number, announcement_obj.id)
+                print('sms has been send to {}'.format(phone_number))
+                announcement_obj.send_sms = True
+                db.session.add(announcement_obj)
+                db.session.commit()
 
             except:
                 value = 5
@@ -108,11 +113,14 @@ def find_announcement():
                 announcement_obj = Announcement(title=title, description=desc, mobile_number=phone_number,
                                                 size_amount=size_amount, type=type_, build_year=build_year,
                                                 rooms_num=rooms_num, market="Divar")
-
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('Added Done with information', title, desc, phone_number,
+                print('>>>> Added Done with information : ', title, desc, phone_number,
                       size_amount, type_, build_year, rooms_num, "In divar")
-                time.sleep(10)
+                # adapter.send_link_divar(phone_number, announcement_obj.id)
+                print('sms has been send to {}'.format(phone_number))
+                announcement_obj.send_sms = True
+                db.session.add(announcement_obj)
+                db.session.commit()
 
     return render_template('basket.html', form=form)

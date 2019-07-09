@@ -1,3 +1,4 @@
+# first create virtualenv with command virtualenv -p python3.6 venv
 # Python imports
 
 # Flask imports
@@ -17,6 +18,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 
-
-
-from controller import user, basket
+from controller import user, basket, api, errors
