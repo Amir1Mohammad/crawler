@@ -7,6 +7,7 @@ import json
 # Flask imports
 from flask_login import login_required
 from flask import render_template
+from flask import request
 
 # Project imports
 from controller import app, db
@@ -18,8 +19,8 @@ from model.announcement import Announcement
 __Author__ = "Amir Mohammad"
 
 
-@login_required
 @app.route('/scrape', methods=['GET', 'POST'])
+@login_required
 def find_announcement():
     # First turn off any vpn or proxy
 
@@ -124,3 +125,17 @@ def find_announcement():
                 db.session.commit()
 
     return render_template('basket.html', form=form)
+
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+
+@login_required
+@app.route('/shutdown', methods=['GET', 'POST'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'

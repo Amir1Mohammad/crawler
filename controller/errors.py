@@ -9,6 +9,10 @@ def bad_request(message):
     return error_response(400, message)
 
 
+def unauthorized(message):
+    return error_response(401, message)
+
+
 def not_found():
     pass
 

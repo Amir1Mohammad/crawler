@@ -14,9 +14,9 @@ __Author__ = "Amir Mohammad"
 
 
 @app.route('/')
+@app.route('/index')
 def index():
-    # return "<h1>Hello Baby . We want to do great and Big! things</h1>"
-    return redirect('/scrape')
+    return render_template('base.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -45,7 +45,7 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('index'))
+        return redirect('/scrape')
     return render_template('login.html', title='Sign In', form=form)
 
 
