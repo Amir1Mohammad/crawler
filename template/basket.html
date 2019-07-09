@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% extends "base.html" %}
 <head>
     <meta charset="UTF-8">
     <title>Hello Omid</title>
@@ -9,10 +10,17 @@
 {% block content %}
 
 <div align="center">
-    When you ready to Boom . click start ?
+    <p>سلام امیر خوبی ؟؟</p>
+    <p>اسم
+        <b>من مالک اشتره</b>
+
+
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>{{ form.power }}</p>
+
+<!--        <a href="http://google.com">Shutdown!</a>-->
+
         <p>{{ form.submit() }}</p>
     </form>
     </div>

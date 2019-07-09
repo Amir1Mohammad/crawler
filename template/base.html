@@ -9,9 +9,10 @@
     {% endif %}
 </head>
 <body>
-<div>
+<div align="center">
     Microblog:
     <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('find_announcement') }}">scrape</a>
     {% if current_user.is_anonymous %}
     <a href="{{ url_for('login') }}">Login</a>
     {% else %}
