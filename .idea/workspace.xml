@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d58daace-fc1c-4cd5-86a6-06f471e4ce36" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/crawler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crawler.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/requests_handling.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/requests_handling.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/scraper.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="scraper.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="scraper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller/scraper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+            <state relative-caret-position="234">
+              <caret line="30" column="22" lean-forward="true" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
               <folding>
                 <element signature="e#17#26#0" expanded="true" />
               </folding>
@@ -45,14 +40,12 @@
       </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/__init__.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+            <state relative-caret-position="286">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+              <folding>
+                <element signature="e#34#57#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -143,6 +136,8 @@
       <find>kave</find>
       <find>base</find>
       <find>import user</find>
+      <find>online</find>
+      <find>envi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,10 +162,10 @@
         <option value="$PROJECT_DIR$/template/basket.html" />
         <option value="$PROJECT_DIR$/controller/user.py" />
         <option value="$PROJECT_DIR$/template/base.html" />
-        <option value="$PROJECT_DIR$/controller/scraper.py" />
         <option value="$PROJECT_DIR$/controller/requests_handling.py" />
-        <option value="$PROJECT_DIR$/controller/__init__.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/controller/__init__.py" />
+        <option value="$PROJECT_DIR$/controller/scraper.py" />
       </list>
     </option>
   </component>
@@ -184,7 +179,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1980" />
+    <option name="x" value="-1860" />
     <option name="y" value="-11" />
     <option name="width" value="1861" />
     <option name="height" value="1092" />
@@ -345,7 +340,7 @@
     <option name="totallyTimeSpent" value="42337000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1980" y="-11" width="1861" height="1092" extended-state="6" />
+    <frame x="-1860" y="-11" width="1861" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -355,8 +350,8 @@
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3437967" />
       <window_info anchor="bottom" id="Floobits" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.31130064" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19635962" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.31130064" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19635962" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -507,13 +502,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.env" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller/micro.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -621,16 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/scraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
-          <folding>
-            <element signature="e#17#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller/requests_handling.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -641,13 +619,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
+        <state relative-caret-position="421">
           <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#34#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="35" column="4" selection-start-line="35" selection-end-line="35" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/scraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="30" column="22" lean-forward="true" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+          <folding>
+            <element signature="e#17#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

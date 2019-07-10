@@ -12,7 +12,7 @@ from flask import request
 
 # Project imports
 from controller import app, db
-# from controller.sms import SMSAdapter
+from controller.sms import SMSAdapter
 from form.option import OptionBazaar
 from controller.requests_handling import data, headers, urls
 from model.announcement import Announcement
@@ -27,7 +27,7 @@ def find_announcement():
 
     search_url = urls[0]
     form = OptionBazaar()
-    # adapter = SMSAdapter()
+    adapter = SMSAdapter()
     if form.validate_on_submit() and form.power.data:
 
         print('button submitted ======================')
