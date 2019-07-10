@@ -9,7 +9,7 @@ import time
 # # Project imports
 # # from model.announcement import Announcement
 #
-from controller.sms import SMSAdapter
+# from controller.sms import SMSAdapter
 __Author__ = "Amir Mohammad"
 
 urls = ['https://search.divar.ir/json/', 'https://api.divar.ir/v5/posts/AXobNwZ1',

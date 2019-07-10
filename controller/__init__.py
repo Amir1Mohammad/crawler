@@ -1,4 +1,3 @@
-# first create virtualenv with command virtualenv -p python3.6 venv
 # Python imports
 
 # Flask imports

@@ -3,6 +3,7 @@ import os
 import time
 import requests
 import json
+from random import randrange
 
 # Flask imports
 from flask_login import login_required
@@ -11,7 +12,7 @@ from flask import request
 
 # Project imports
 from controller import app, db
-from controller.sms import SMSAdapter
+# from controller.sms import SMSAdapter
 from form.option import OptionBazaar
 from controller.requests_handling import data, headers, urls
 from model.announcement import Announcement
@@ -26,14 +27,15 @@ def find_announcement():
 
     search_url = urls[0]
     form = OptionBazaar()
-    adapter = SMSAdapter()
+    # adapter = SMSAdapter()
     if form.validate_on_submit() and form.power.data:
 
         print('button submitted ======================')
         first_request = requests.post(search_url, data=json.dumps(data), headers=headers)
         detail_first_request = first_request.json()['result']['post_list']
         for each in detail_first_request:
-            time.sleep(10)
+            random_time = randrange(5, 20)
+            time.sleep(random_time)
             try:
                 value = 6
                 new_url = 'https://api.divar.ir/v5/posts/' + each['token']
