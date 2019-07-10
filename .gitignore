@@ -32,7 +32,6 @@ wheels/
 *.xml
 *iml
 
-sms.py
 environ.py
 # PyInstaller
 #  Usually these files are written by a python script from a template
