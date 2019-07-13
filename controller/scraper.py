@@ -29,7 +29,7 @@ def find_announcement():
     adapter = SMSAdapter()
     if form.validate_on_submit() and form.power.data:
 
-        print('button submitted ======================')
+        print('====================== button submitted ======================')
         first_request = requests.post(search_url, data=json.dumps(data), headers=headers)
         detail_first_request = first_request.json()['result']['post_list']
         for each in detail_first_request:
@@ -54,6 +54,11 @@ def find_announcement():
                 else:
                     rooms_num = 0
 
+                if jsonify_new_url['widgets']['list_data'][value - 2]['title'] == 'آگهی‌دهنده':
+                    owner = jsonify_new_url['widgets']['list_data'][value - 2]['value']
+                else:
+                    owner = 'Not valid data'
+
                 if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
                     build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
                 else:
@@ -62,20 +67,21 @@ def find_announcement():
                 if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
                     type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
                 else:
-                    type_ = 'none'
+                    type_ = 'Not valid data'
 
                 get_contact = requests.get(new_url + '/contact')
                 phone_number = get_contact.json()['widgets']['contact']['phone']
-                announcement_obj = Announcement(title=title, description=desc, mobile_number=phone_number,
-                                                size_amount=size_amount, type=type_, build_year=build_year,
+                announcement_obj = Announcement(title=title, description=desc, url=new_url, mobile_number=phone_number,
+                                                size_amount=size_amount, owner=owner, type=type_,
+                                                build_year=build_year,
                                                 rooms_num=rooms_num, market="Divar")
 
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('>>>> Added Done with information : ', title, desc, phone_number,
-                      size_amount, type_, build_year, rooms_num, "In divar")
+                print('t>>>>>>>> ', new_url, phone_number,
+                      size_amount, type_, build_year, owner, rooms_num, "In divar", '| sms send to {}'.format(phone_number))
                 # adapter.send_link_divar(phone_number, announcement_obj.id)
-                print('sms has been send to {}'.format(phone_number))
+
                 announcement_obj.send_sms = True
                 db.session.add(announcement_obj)
                 db.session.commit()
@@ -99,6 +105,11 @@ def find_announcement():
                 else:
                     rooms_num = 0
 
+                if jsonify_new_url['widgets']['list_data'][value - 2]['title'] == 'آگهی‌دهنده':
+                    owner = jsonify_new_url['widgets']['list_data'][value - 2]['value']
+                else:
+                    owner = 'Not valid data'
+
                 if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
                     build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
                 else:
@@ -107,18 +118,19 @@ def find_announcement():
                 if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
                     type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
                 else:
-                    type_ = 'none'
+                    type_ = 'Not valid data'
 
                 get_contact = requests.get(new_url + '/contact')
                 phone_number = get_contact.json()['widgets']['contact']['phone']
 
-                announcement_obj = Announcement(title=title, description=desc, mobile_number=phone_number,
-                                                size_amount=size_amount, type=type_, build_year=build_year,
+                announcement_obj = Announcement(title=title, description=desc, url=new_url, mobile_number=phone_number,
+                                                size_amount=size_amount, owner=owner, type=type_,
+                                                build_year=build_year,
                                                 rooms_num=rooms_num, market="Divar")
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('>>>> Added Done with information : ', title, desc, phone_number,
-                      size_amount, type_, build_year, rooms_num, "In divar")
+                print('e>>>>>>>> ', new_url, phone_number,
+                      size_amount, owner, type_, build_year, rooms_num, "In divar")
                 # adapter.send_link_divar(phone_number, announcement_obj.id)
                 print('sms has been send to {}'.format(phone_number))
                 announcement_obj.send_sms = True
