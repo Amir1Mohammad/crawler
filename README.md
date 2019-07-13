@@ -30,3 +30,8 @@ and for running application should run :
 ```
 $ flask run
 ```
+
+for run in another port you can :
+```
+$ flask run --host=0.0.0.0 --port=8080
+```
