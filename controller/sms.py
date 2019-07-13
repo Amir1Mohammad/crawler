@@ -6,7 +6,12 @@ import requests
 # Flask imports
 
 # Project imports
-from controller.environ import SEND_SMS_URL, SEND_SMS_VERIFY
+SMS_PANEL_API_KEY = '48457255443835526D536C4E5377317A6E4F645333413D3D'
+SEND_SMS_VERIFY = 'https://api.kavenegar.com/v1/{}/verify/lookup.json'.format(SMS_PANEL_API_KEY)
+SEND_SMS_URL = 'https://api.kavenegar.com/v1/{}/sms/send.json'.format(SMS_PANEL_API_KEY)
+SMS_VERIFICATION_CODE_EXPIRED_TIME = int(5 * 60)  # 5 min
+CREATE_USER_EXPIRED_TIME = 60 * 60  # 1 hour
+
 
 __Author__ = "Amir Mohammad"
 

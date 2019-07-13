@@ -8,7 +8,7 @@ from flask_login import LoginManager
 
 # Project imports
 from config import Config
-from controller import user, scraper, api, errors
+# from controller import user, scraper, api, errors
 
 __Author__ = "Amir Mohammad"
 
@@ -18,3 +18,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 
+from controller import user, scraper, api, errors
