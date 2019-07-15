@@ -29,7 +29,7 @@ def find_announcement():
     adapter = SMSAdapter()
     if form.validate_on_submit() and form.power.data:
 
-        print('====================== button submitted ======================')
+        print('======================== button submitted ========================')
         first_request = requests.post(search_url, data=json.dumps(data), headers=headers)
         detail_first_request = first_request.json()['result']['post_list']
         for each in detail_first_request:
@@ -78,13 +78,10 @@ def find_announcement():
 
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('t>>>>>>>> ', new_url, phone_number,
-                      size_amount, type_, build_year, owner, rooms_num, "In divar", '| sms send to {}'.format(phone_number))
                 # adapter.send_link_divar(phone_number, announcement_obj.id)
-
-                announcement_obj.send_sms = True
-                db.session.add(announcement_obj)
-                db.session.commit()
+                print('>>>>>>>> ', new_url, phone_number,
+                      size_amount, type_, build_year, owner, rooms_num,
+                      "In divar", '| sms send to {}'.format(phone_number), "try")
 
             except:
                 value = 5
@@ -129,13 +126,10 @@ def find_announcement():
                                                 rooms_num=rooms_num, market="Divar")
                 db.session.add(announcement_obj)
                 db.session.commit()
-                print('e>>>>>>>> ', new_url, phone_number,
-                      size_amount, owner, type_, build_year, rooms_num, "In divar")
                 # adapter.send_link_divar(phone_number, announcement_obj.id)
-                print('sms has been send to {}'.format(phone_number))
-                announcement_obj.send_sms = True
-                db.session.add(announcement_obj)
-                db.session.commit()
+                print('>>>>>>>> ', new_url, phone_number,
+                      size_amount, owner, type_, build_year, rooms_num,
+                      "In divar", '| sms send to {}'.format(phone_number), "except")
 
     return render_template('basket.html', form=form)
 
