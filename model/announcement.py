@@ -15,17 +15,14 @@ class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Unicode, nullable=False)
     description = db.Column(db.Unicode, nullable=True)
+    url = db.Column(db.String(256), nullable=True)
     mobile_number = db.Column(db.String(13), nullable=True)
-    lat = db.Column(db.Float, nullable=True)
-    long = db.Column(db.Float, nullable=True)
-    district = db.Column(db.Unicode, nullable=True)
-    deposit_amount = db.Column(db.Unicode, nullable=True)
-    rent_amount = db.Column(db.Unicode, nullable=True)
+    owner = db.Column(db.Unicode, nullable=True)
     has_loan = db.Column(db.Boolean, default=False)
     size_amount = db.Column(db.Unicode, nullable=False)
     type = db.Column(db.Unicode, nullable=False)
     rooms_num = db.Column(db.Unicode, nullable=True, default=1)
-    build_year = db.Column(db.Unicode, nullable=False)
+    build_year = db.Column(db.Unicode, nullable=True)
     market = db.Column(db.String(32), nullable=False)
     send_sms = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=False)
@@ -38,17 +35,13 @@ class Announcement(db.Model):
         data = {
             'id': self.id,
             'title': self.title,
+            'url': self.url,
             'description': self.description,
             'mobile_number': self.mobile_number,
             'size_amount': self.size_amount,
             'type': self.type,
             'rooms_num': self.rooms_num,
             'build_year': self.build_year,
-            'district': self.district,
-            'lat': self.lat,
-            'long': self.long,
-            'deposit_amount': self.deposit_amount
-
+            'owner': self.owner,
         }
-
         return data

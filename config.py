@@ -1,12 +1,12 @@
 # Python imports
 import os
+
 # Flask imports
 
 # Project imports
 
 
 __Author__ = "Amir Mohammad"
-
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,7 +17,7 @@ class Config(object):
                               'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JSON_AS_ASCII = False
-
+    ANNOUNCEMENTS_PER_PAGE = 4
 
 
 class ProductionConfig(Config):
