@@ -17,8 +17,10 @@ def not_found():
     pass
 
 
-def server_error():
-    pass
+def server_error(message):
+    response = jsonify(message)
+    response.status_code = 500
+    return response
 
 
 def error_response(status_code, message=None):

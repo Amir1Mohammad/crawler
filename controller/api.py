@@ -11,7 +11,7 @@ from decorators import token_required
 __Author__ = "Amir Mohammad"
 
 
-@app.route('/api_1/<int:id>/d1v4r', methods=['GET'])
+@app.route('/api_1/<int:id>/d1v4r', methods=['GET', 'POST'])
 @token_required
 def get_detail_announcement_from_divar(id):
     return jsonify(jsonify=Announcement.query.get_or_404(id).to_dict())

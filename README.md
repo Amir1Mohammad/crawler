@@ -35,3 +35,13 @@ for run in another port you can :
 ```
 $ flask run --host=0.0.0.0 --port=8080
 ```
+
+first should be run redis on docker with this command :
+```
+$ sudo docker-compose up -d redis
+```
+
+for run celery :
+```
+$ celery worker -A controller.celery --loglevel=info
+```
