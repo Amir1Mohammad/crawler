@@ -9,7 +9,6 @@ from flask_login import login_required
 from flask import render_template
 from flask import request
 
-
 # Project imports
 from controller import app, db
 from controller.sms import SMSAdapter
@@ -139,7 +138,7 @@ def find_announcement():
 
 
 def shutdown_server():
-    func = request.environ.get('werkzeug.server.restart')
+    func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
