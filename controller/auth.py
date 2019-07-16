@@ -10,7 +10,7 @@ from controller import app
 __Author__ = "Amir Mohammad"
 
 
-@app.route('/api_1/get_token', methods=['GET'])
+@app.route('/api_1/get_token', methods=['POST'])
 def authorization():
     auth = request.authorization
     if auth and auth.username == 'amir' and auth.password == '9128020911':

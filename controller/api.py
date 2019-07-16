@@ -18,7 +18,7 @@ def get_detail_announcement_from_divar(id):
 
 
 @app.route('/api_1/all/d1v4r/<int:page>', methods=['GET', 'POST'])
-# @cache.cached(timeout=360)
+@cache.cached(timeout=360)
 @token_required
 def get_announcement_estate_agent(page):
     announcement_obj = Announcement.query.filter_by(owner='شخصی')
