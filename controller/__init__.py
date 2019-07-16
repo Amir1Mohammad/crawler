@@ -10,6 +10,7 @@ from flask_caching import Cache
 
 # Project imports
 from config import Config
+
 # from controller import user, scraper, api, errors
 
 __Author__ = "Amir Mohammad"
@@ -25,6 +26,4 @@ login = LoginManager(app)
 cache = Cache(app)
 cache.init_app(app)
 
-
-
-from controller import user, scraper, api, errors
+from controller import user, scraper, api, errors, auth
