@@ -9,6 +9,7 @@ from flask_login import login_required
 from flask import render_template
 from flask import request
 
+
 # Project imports
 from controller import app, db
 from controller.sms import SMSAdapter
@@ -83,7 +84,7 @@ def find_announcement():
                       size_amount, type_, build_year, owner, rooms_num,
                       "In divar", '| sms send to {}'.format(phone_number), "try")
 
-            except:
+            except IndexError:
                 value = 5
                 new_url = 'https://api.divar.ir/v5/posts/' + each['token']
                 time.sleep(1)
@@ -131,11 +132,14 @@ def find_announcement():
                       size_amount, owner, type_, build_year, rooms_num,
                       "In divar", '| sms send to {}'.format(phone_number), "except")
 
+            except:
+                pass
+
     return render_template('basket.html', form=form)
 
 
 def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
+    func = request.environ.get('werkzeug.server.restart')
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
