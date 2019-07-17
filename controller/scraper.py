@@ -144,7 +144,8 @@ def find_announcement():
     # First turn off any vpn or proxy
     form = OptionBazaar()
     if form.validate_on_submit() and form.power.data:
-        my_scraper_divar_task.apply_async()
+        my_scraper_divar_task()
+        # my_scraper_divar_task.apply_async()
         flash('Async Task has been started !')
     return render_template('basket.html', form=form)
 
