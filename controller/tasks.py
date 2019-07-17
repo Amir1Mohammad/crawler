@@ -35,7 +35,7 @@ def my_scraper_divar_task():
             value = 6
             title = jsonify_new_url['data']['share']['title']
             desc = jsonify_new_url['data']['share']['description']
-
+            place = jsonify_new_url['widgets']['header']['place']
             if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
                 size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
             else:
@@ -68,27 +68,23 @@ def my_scraper_divar_task():
                 lat, long = 0.0, 0.0
 
             try:
-                if jsonify_new_url['widgets']['list_data'][value + 1]['title'] == 'ودیعه':
-                    deposit_amount = jsonify_new_url['widgets']['list_data'][value + 1]['value']
-                    rent = jsonify_new_url['widgets']['list_data'][value + 2]['value']
-                else:
-                    deposit_amount = 'Not found deposit'
-                    rent = 'Not found rent'
+                deposit_amount = jsonify_new_url['widgets']['list_data'][value + 1]['value']
+                rent = jsonify_new_url['widgets']['list_data'][value + 2]['value']
+
             except:
-                deposit_amount = 0
-                rent = 0
+                deposit_amount, rent = 0, 0
 
             get_contact = requests.get(new_url + '/contact')
             phone_number = get_contact.json()['widgets']['contact']['phone']
             announcement_obj = Announcement(title=title, description=desc, url=new_url, mobile_number=phone_number,
-                                            size_amount=size_amount, owner=owner, type=type_, rent=rent,
+                                            size_amount=size_amount, owner=owner, type=type_, rent=rent,place=place,
                                             build_year=build_year, lat=lat, long=long, deposit_amount=deposit_amount,
                                             rooms_num=rooms_num, market="Divar")
 
             db.session.add(announcement_obj)
             db.session.commit()
             # adapter.send_link_divar(phone_number, announcement_obj.id)
-            print('>>>>>>>> ', new_url, phone_number,
+            print('>>>>>>>> ', new_url, place,
                   size_amount, type_, build_year, owner, rooms_num,
                   "In divar", '| sms send to {}'.format(phone_number), "try")
 
@@ -134,27 +130,22 @@ def my_scraper_divar_task():
                 lat, long = 0.0, 0.0
 
             try:
-                if jsonify_new_url['widgets']['list_data'][value + 1]['title'] == 'ودیعه':
-                    deposit_amount = jsonify_new_url['widgets']['list_data'][value + 1]['value']
-                    rent = jsonify_new_url['widgets']['list_data'][value + 2]['value']
-                else:
-                    deposit_amount = 'Not valid deposit'
-                    rent = 'Not valid rent'
+                deposit_amount = jsonify_new_url['widgets']['list_data'][value + 1]['value']
+                rent = jsonify_new_url['widgets']['list_data'][value + 2]['value']
             except:
-                deposit_amount = 0
-                rent = 0
+                deposit_amount, rent = 0, 0
 
             get_contact = requests.get(new_url + '/contact')
             phone_number = get_contact.json()['widgets']['contact']['phone']
             announcement_obj = Announcement(title=title, description=desc, url=new_url, mobile_number=phone_number,
-                                            size_amount=size_amount, owner=owner, type=type_, rent=rent,
+                                            size_amount=size_amount, owner=owner, type=type_, rent=rent, place=place,
                                             build_year=build_year, lat=lat, long=long, deposit_amount=deposit_amount,
                                             rooms_num=rooms_num, market="Divar")
 
             db.session.add(announcement_obj)
             db.session.commit()
             # adapter.send_link_divar(phone_number, announcement_obj.id)
-            print('>>>>>>>> ', new_url, phone_number,
+            print('>>>>>>>> ', new_url, place,
                   size_amount, type_, build_year, owner, rooms_num,
                   "In divar", '| sms send to {}'.format(phone_number), "try")
 
