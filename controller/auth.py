@@ -17,7 +17,7 @@ def authorization():
         token = jwt.encode(
             {'user': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config['SECRET_KEY'])
-        return jsonify({'token': token.decode('UTF-8')}), 200
+        return jsonify(jsonify={'token': token.decode('UTF-8')}), 200
 
     return make_response({'message': 'Could not verify token'}, 401,
                          {'WWW-Authenticate': 'Basic real="Login Required"'})
