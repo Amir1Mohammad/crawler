@@ -26,6 +26,7 @@ def my_scraper_divar_task():
     detail_first_request = first_request.json()['result']['post_list']
     for each in detail_first_request:
         random_time = randrange(5, 20)
+
         time.sleep(random_time)
         new_url = 'https://api.divar.ir/v5/posts/' + each['token']
         time.sleep(1)
@@ -77,13 +78,13 @@ def my_scraper_divar_task():
             get_contact = requests.get(new_url + '/contact')
             phone_number = get_contact.json()['widgets']['contact']['phone']
             announcement_obj = Announcement(title=title, description=desc, url=new_url, mobile_number=phone_number,
-                                            size_amount=size_amount, owner=owner, type=type_, rent=rent,place=place,
+                                            size_amount=size_amount, owner=owner, type=type_, rent=rent, place=place,
                                             build_year=build_year, lat=lat, long=long, deposit_amount=deposit_amount,
                                             rooms_num=rooms_num, market="Divar")
 
             db.session.add(announcement_obj)
             db.session.commit()
-            # adapter.send_link_divar(phone_number, announcement_obj.id)
+            # adapter.send_link_divar(str(phone_number), announcement_obj.id)
             print('>>>>>>>> ', new_url, place,
                   size_amount, type_, build_year, owner, rooms_num,
                   "In divar", '| sms send to {}'.format(phone_number), "try")
@@ -144,10 +145,10 @@ def my_scraper_divar_task():
 
             db.session.add(announcement_obj)
             db.session.commit()
-            # adapter.send_link_divar(phone_number, announcement_obj.id)
+            # adapter.send_link_divar(str(phone_number), announcement_obj.id)
             print('>>>>>>>> ', new_url, place,
                   size_amount, type_, build_year, owner, rooms_num,
                   "In divar", '| sms send to {}'.format(phone_number), "try")
 
-        # except:
-        #     pass
+        except:
+            pass

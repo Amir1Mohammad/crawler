@@ -59,5 +59,6 @@ class Announcement(db.Model):
             'rooms_num': self.rooms_num,
             'build_year': self.build_year,
             'owner': self.owner,
+            'created_at': self.created_at
         }
         return data
