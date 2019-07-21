@@ -21,15 +21,17 @@ __Author__ = "Amir Mohammad"
 def my_scraper_divar_task():
     search_url = urls[0]
     adapter = SMSAdapter()
+    # my_server_url = 'http://193.176.240.42:8080/api_1/insert/d1v4r'
+    my_server_url = 'http://127.0.0.1:5000/api_1/insert/d1v4r'
     print('======================== button submitted ========================')
 
     first_request = requests.post(search_url, data=json.dumps(data), headers=headers)
     detail_first_request = first_request.json()['result']['post_list']
     print('Crawling {} Announcement from divar'.format(len(detail_first_request)))
     for each in detail_first_request:
-        random_time = randrange(5, 20)
-
+        random_time = randrange(20, 40)
         time.sleep(random_time)
+
         new_url = 'https://api.divar.ir/v5/posts/' + each['token']
         time.sleep(1)
         get_new_url = requests.get(new_url)
@@ -68,6 +70,7 @@ def my_scraper_divar_task():
             try:
                 lat = jsonify_new_url['widgets']['location']['latitude']
                 long = jsonify_new_url['widgets']['location']['latitude']
+
             except:
                 lat, long = 0.0, 0.0
 
@@ -81,19 +84,25 @@ def my_scraper_divar_task():
             get_contact = requests.get(new_url + '/contact')
             phone_number = get_contact.json()['widgets']['contact']['phone']
 
-            announcement_obj = Announcement(title=title, description=desc, url=new_url, mobile_number=phone_number,
-                                            size_amount=size_amount, owner=owner, type=type_, rent=rent, place=place,
-                                            build_year=build_year, lat=lat, long=long, deposit_amount=deposit_amount,
-                                            rooms_num=rooms_num, market="Divar")
+            information = {
+                "title": title, "description": desc, "place": place, "size_amount": size_amount,
+                "rooms_num": rooms_num, "owner": owner, "build_year": build_year, "type": type_,
+                "lat": lat, "long": long, "deposit_amount": deposit_amount, "rent": rent,
+                "phone_number": phone_number, "url": new_url, "market": "In divar"
 
-            db.session.add(announcement_obj)
-            db.session.commit()
-            # adapter.send_link_divar(str(phone_number), announcement_obj.id)
-            print('>>>>>>>> ', new_url, place,
-                  size_amount, type_, build_year, owner, rooms_num,
-                  "In divar", '| sms send to {}'.format(phone_number), "try")
+            }
+
+            sending = requests.post(my_server_url, data=json.dumps(information), headers=headers)
+            if sending.status_code == 200:
+                ann_id = sending.json()['announcement_obj_id']
+                # adapter.send_link_divar(str(phone_number), ann_id)
+                print('>>>>>>>> ', new_url, place,
+                      size_amount, type_, build_year, owner, rooms_num, ann_id, random_time,
+                      '| sms send to {}'.format(phone_number))
+            else:
+                my_scraper_divar_task()
 
         except IndexError as e:
             print(e)
-            print('hello sleep')
+            print('Hello . this is sleep time :)')
             my_scraper_divar_task()
