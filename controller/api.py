@@ -1,5 +1,5 @@
 # Python imports
-
+import json
 
 # Flask imports
 from flask import jsonify, request, Response, abort
@@ -9,13 +9,12 @@ from model.announcement import Announcement
 from model.user import Log
 from controller import app, cache, db
 from decorators import token_required
-from controller.errors import server_error
 
 __Author__ = "Amir Mohammad"
 
 
 @app.route('/api_1/<int:id>/d1v4r', methods=['GET', 'POST'])
-# @token_required
+@token_required
 def get_detail_announcement_from_divar(id):
     return jsonify(jsonify=Announcement.query.get_or_404(id).to_dict())
 
@@ -30,6 +29,7 @@ def get_announcement_estate_agent(page):
 
 
 @app.route('/api_1/insert/d1v4r', methods=['POST'])
+@token_required
 def getting_data_from_localhost():
     try:
         parsejson = request.get_json()
@@ -62,27 +62,27 @@ def getting_data_from_localhost():
         return jsonify({'message': 'ok', "ann_id": announcement_obj.id}), 201
     except:
         pass
-        # return jsonify(server_error('getting_data_from_localhost Error')), 500
 
 
 @app.route('/api_1/enable/<int:ann_id>/d1v4r', methods=['GET'])
+@token_required
 def enable_is_seen(ann_id):
     try:
         announcement_obj = Announcement.query.get_or_404(ann_id)
-        print(announcement_obj.id)
         log_obj = Log(announcement_id=announcement_obj.id, is_seen=True)
         db.session.add(log_obj)
         db.session.commit()
         return jsonify({'message': 'ok'}), 200
+
     except:
         abort(500)
 
 
 @app.route('/api_1/submit/<int:ann_id>/d1v4r', methods=['GET'])
+@token_required
 def enable_is_submit(ann_id):
     try:
         announcement_obj = Announcement.query.get_or_404(ann_id)
-        print(announcement_obj.id)
         log_obj = Log(announcement_id=announcement_obj.id, is_seen=True, is_submit=True)
         db.session.add(log_obj)
         db.session.commit()
@@ -90,3 +90,11 @@ def enable_is_submit(ann_id):
 
     except:
         abort(500)
+
+
+@app.route('/api_1/search', methods=['GET', 'POST'])
+# @token_required
+def search_announcement():
+    announcement_obj = Announcement.query.all()
+
+    return jsonify(jsonify=[each.to_dict() for each in announcement_obj])

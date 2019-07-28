@@ -7,8 +7,10 @@ from flask import request, flash
 from flask_login import login_required
 
 # Project imports
+from sqlalchemy import desc
+
 from controller import app
-from controller.tasks import scrape_tehran
+from controller.tasks import scrape_tehran, shutdown_server
 from form.crawl_option import OptionBazaar
 from model.user import Log
 from model.announcement import Announcement
@@ -22,13 +24,13 @@ def index():
     return render_template('base.html')
 
 
-@app.route('/log_file', methods=['GET'])
+@app.route('/log_file/', methods=['GET'])
 @login_required
 def retrieve_log():
-    log_obj = Log.query.filter_by(status=False)
-
+    log_obj = Log.query.order_by(desc(Log.created_at)).all()
     for each in log_obj:
         ann_obj = Announcement.query.get(each.announcement_id)
+
     return render_template('log.html', log_obj=log_obj, my_file=ann_obj)
 
 
@@ -43,18 +45,10 @@ def crawler_manager():
         body = form.body.data
         sleep_from = form.sleep_from.data
         sleep_to = form.sleep_to.data
-        print(body, sleep_from, sleep_to)
         scrape_tehran(body, sleep_from, sleep_to)
         # scrape_tehran.apply_async()
 
     return render_template('basket.html', form=form)
-
-
-def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
 
 
 @login_required

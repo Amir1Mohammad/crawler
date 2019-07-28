@@ -16,11 +16,6 @@ def unauthorized(message):
     return error_response(401, message)
 
 
-@app.errorhandler(404)
-def not_found(message):
-    return error_response(404, message)
-
-
 def server_error(message='Internal Server error ...'):
     response = jsonify(message)
     response.status_code = 500

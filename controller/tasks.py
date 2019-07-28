@@ -6,6 +6,7 @@ from random import randrange
 from controller import celery
 
 # Flask imports
+from flask import request
 
 # Project imports
 from controller import db
@@ -131,3 +132,10 @@ def scrape_tehran(body, sleep_from=10, sleep_to=20):
             if e == 'widgets':
                 print('Error ! . Turn off the proxy ...')
             pass
+
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
