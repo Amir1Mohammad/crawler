@@ -3,8 +3,8 @@
 # Flask imports
 
 # Project imports
+from model import announcement, user
 
 
 __Author__ = "Amir Mohammad"
 
-from model import announcement, user

@@ -2,6 +2,9 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
 
+# Project imports
+from controller import app
+
 __Author__ = "Amir Mohammad"
 
 
@@ -13,11 +16,12 @@ def unauthorized(message):
     return error_response(401, message)
 
 
-def not_found():
-    pass
+@app.errorhandler(404)
+def not_found(message):
+    return error_response(404, message)
 
 
-def server_error(message):
+def server_error(message='Internal Server error ...'):
     response = jsonify(message)
     response.status_code = 500
     return response

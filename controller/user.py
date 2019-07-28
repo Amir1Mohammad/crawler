@@ -1,22 +1,17 @@
 # Python imports
-
+import datetime
+import jwt
 # Flask imports
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, jsonify, make_response, request
 from flask_login import current_user, login_user, logout_user
 
 # Project imports
 from controller import app
 from controller import db
 from model.user import User
-from form.login import *
+from form.register import *
 
 __Author__ = "Amir Mohammad"
-
-
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('base.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -53,3 +48,16 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/api_1/get_token', methods=['POST'])
+def authorization():
+    auth = request.authorization
+    if auth and auth.username == 'amir' and auth.password == '9128020911':
+        token = jwt.encode(
+            {'user': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            app.config['SECRET_KEY'])
+        return jsonify(jsonify={'token': token.decode('UTF-8')}), 200
+
+    return make_response({'message': 'Could not verify token'}, 401,
+                         {'WWW-Authenticate': 'Basic real="Login Required"'})

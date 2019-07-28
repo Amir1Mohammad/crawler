@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+    <title>Log file</title>
+</head>
+<body>
+
+{% block content %}
+    <h1>Log Details</h1>
+    <br>
+    <div style="text-align: center">
+        {% for detail in log_obj %}
+            <div style="border:solid 1px gray; float:left;width:33%;margin:10px auto;border-radius: 4px;">
+                <p><b>create at: {{ detail.created_at }}</b>
+                <p>is_seen: {{ detail.is_seen }}</p>
+                <p>is_submit: {{ detail.is_submit }}</p>
+                </p>
+                <p>id : {{ detail.announcement_id }}</p>
+                <p>phone number :{{ my_file.mobile_number }}</p>
+                <p>place :{{ my_file.place }}</p>
+                <p>build year :{{ my_file.build_year }}</p>
+                <br>
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>

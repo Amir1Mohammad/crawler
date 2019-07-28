@@ -5,26 +5,46 @@
     <meta charset="UTF-8">
     <title>Hello Omid</title>
 </head>
-
 <body>
 {% block content %}
 
-<div align="center">
-    <p>سلام امیر خوبی ؟؟</p>
-    <p>اسم
-        <b>من مالک اشتره</b>
+    <div align="center">
+        <p>سلام امیر خوبی ؟؟</p>
+        <p>اسم
+            <b>من مالک اشتره</b>
 
 
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>{{ form.power }}</p>
-    <p><a href="{{ url_for('shutdown') }}">shutdown</a></p>
-
-<!--        <a href="http://google.com">Shutdown!</a>-->
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+        <p>{{ form.power.label }}{{ form.power }}</p>
+        <p>{{ form.body.label }} : {{ form.body }}
+            {% for error in form.body.errors %}
+                <span style="color: orangered;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.sleep_from.label }} : {{ form.sleep_from }}
+            {% for error in form.sleep_from.errors %}
+                <span style="color: orangered;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.sleep_to.label }} : {{ form.sleep_to }}
+            {% for error in form.sleep_to.errors %}
+                <span style="color: orangered;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p><a href="{{ url_for('shutdown') }}">shutdown</a></p>
 
         <p>{{ form.submit() }}</p>
-    </form>
+        </form>
+
+        <h1><p> :توضیحات به شرح زیر میباشد</p></h1>
+        <b><p>برای بادی موارد زیر را در نظر داشته باشید </p>
+            <p>یک: یعنی شخصی-اجاره</p>
+            <p>دو: یعنی شخصی-فروش</p>
+            <p>سه: یعنی املاک-فروش</p>
+            <p>چهار: یعنی املاک-اجاره</p></b>
     </div>
+
 {% endblock %}
 </body>
 </html>

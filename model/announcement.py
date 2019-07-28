@@ -3,7 +3,6 @@
 
 # Flask imports
 from datetime import datetime
-
 from controller import db
 
 # Project imports
@@ -19,6 +18,7 @@ class Announcement(db.Model):
     title = db.Column(db.Unicode, nullable=False)
     description = db.Column(db.Unicode, nullable=True)
     url = db.Column(db.String(256), nullable=True)
+    token = db.Column(db.String(32), nullable=False, unique=True)
     mobile_number = db.Column(db.String(13), nullable=True)
     owner = db.Column(db.Unicode, nullable=True)
     place = db.Column(db.Unicode, nullable=True)
@@ -33,14 +33,12 @@ class Announcement(db.Model):
     rooms_num = db.Column(db.Unicode, nullable=True, default=1)
     build_year = db.Column(db.Unicode, nullable=True)
     market = db.Column(db.String(32), nullable=False)
-    send_sms = db.Column(db.Boolean, default=False)
-    is_active = db.Column(db.Boolean, default=False)
-    third = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def __repr__(self):
-        return '<Announcement {}>'.format(self.title)
+        return '<Announcement {} {}>'.format(self.mobile_number, self.created_at)
 
+    @property
     def to_dict(self):
         data = {
             'id': self.id,
@@ -59,6 +57,5 @@ class Announcement(db.Model):
             'rooms_num': self.rooms_num,
             'build_year': self.build_year,
             'owner': self.owner,
-            'created_at': self.created_at
         }
         return data

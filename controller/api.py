@@ -2,12 +2,14 @@
 
 
 # Flask imports
-from flask import jsonify, request, Response
+from flask import jsonify, request, Response, abort
 # Project imports
 from controller.sms import SMSAdapter
 from model.announcement import Announcement
+from model.user import Log
 from controller import app, cache, db
 from decorators import token_required
+from controller.errors import server_error
 
 __Author__ = "Amir Mohammad"
 
@@ -46,16 +48,45 @@ def getting_data_from_localhost():
         deposit_amount = parsejson['deposit_amount']
         rooms_num = parsejson['rooms_num']
         market = parsejson['market']
+        token = parsejson['token']
 
         announcement_obj = Announcement(title=title, description=desc, url=url, mobile_number=phone_number,
                                         size_amount=size_amount, owner=owner, type=type_, rent=rent, place=place,
                                         build_year=build_year, lat=lat, long=long, deposit_amount=deposit_amount,
-                                        rooms_num=rooms_num, market=market)
+                                        rooms_num=rooms_num, market=market, token=token)
 
         db.session.add(announcement_obj)
         db.session.commit()
-        print('<<<<<<<<', url, '| Phone number is : {}'.format(phone_number))
+        print('<<<<<<<<', url, '||| Phone number is : {}'.format(phone_number))
 
-        return jsonify({'message': 'ok', "announcement_obj_id": announcement_obj.id}), 200
+        return jsonify({'message': 'ok', "ann_id": announcement_obj.id}), 201
     except:
-        return jsonify({'message': 'Error'}), 500
+        pass
+        # return jsonify(server_error('getting_data_from_localhost Error')), 500
+
+
+@app.route('/api_1/enable/<int:ann_id>/d1v4r', methods=['GET'])
+def enable_is_seen(ann_id):
+    try:
+        announcement_obj = Announcement.query.get_or_404(ann_id)
+        print(announcement_obj.id)
+        log_obj = Log(announcement_id=announcement_obj.id, is_seen=True)
+        db.session.add(log_obj)
+        db.session.commit()
+        return jsonify({'message': 'ok'}), 200
+    except:
+        abort(500)
+
+
+@app.route('/api_1/submit/<int:ann_id>/d1v4r', methods=['GET'])
+def enable_is_submit(ann_id):
+    try:
+        announcement_obj = Announcement.query.get_or_404(ann_id)
+        print(announcement_obj.id)
+        log_obj = Log(announcement_id=announcement_obj.id, is_seen=True, is_submit=True)
+        db.session.add(log_obj)
+        db.session.commit()
+        return jsonify({'message': 'ok'}), 200
+
+    except:
+        abort(500)

@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
+
 <head>
     {% if title %}
-    <title>{{ title }} - Crawl</title>
+        <title>{{ title }} - Crawling</title>
     {% else %}
-    <title>microblog</title>
+        <title>microblog</title>
     {% endif %}
 </head>
 <body>
-<div align="center">
-    Microblog:
-    <a href="{{ url_for('index') }}">Home</a>
-    <a href="{{ url_for('find_announcement') }}">scrape</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login') }}">Login</a>
-    {% else %}
-    <a href="{{ url_for('logout') }}">Logout</a>
-    {% endif %}
-</div>
-<div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
 
+<div align="center">
+    <h3><b>
+        Microblog:
+        <a href="{{ url_for('index') }}" style="margin:5px">Home</a>
+        <a href="{{ url_for('crawler_manager') }}" style="margin:5px">scrape</a>
+        <a href="{{ url_for('retrieve_log') }}" style="margin:5px">File</a>
+        {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}" style="margin:5px">Login</a>
+            <a href="{{ url_for('register') }}" style="margin:5px">SignUp</a>
+
+        {% else %}
+            <a href="{{ url_for('logout') }}" style="margin:5px">Logout</a>
+        {% endif %}
+    </b>
+    </h3>
+    <div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>
