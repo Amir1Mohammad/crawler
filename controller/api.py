@@ -14,14 +14,14 @@ __Author__ = "Amir Mohammad"
 
 
 @app.route('/api_1/<int:id>/d1v4r', methods=['GET', 'POST'])
-@token_required
+# @token_required
 def get_detail_announcement_from_divar(id):
     return jsonify(jsonify=Announcement.query.get_or_404(id).to_dict())
 
 
 @app.route('/api_1/all/d1v4r/<int:page>', methods=['GET', 'POST'])
 # @cache.cached(timeout=360)
-@token_required
+# @token_required
 def get_announcement_estate_agent(page):
     announcement_obj = Announcement.query.filter_by(owner='شخصی')
     paginate_obj = announcement_obj.paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items  # True return 404
@@ -29,7 +29,7 @@ def get_announcement_estate_agent(page):
 
 
 @app.route('/api_1/insert/d1v4r', methods=['POST'])
-@token_required
+# @token_required
 def getting_data_from_localhost():
     try:
         parsejson = request.get_json()
@@ -65,7 +65,7 @@ def getting_data_from_localhost():
 
 
 @app.route('/api_1/enable/<int:ann_id>/d1v4r', methods=['GET'])
-@token_required
+# @token_required
 def enable_is_seen(ann_id):
     try:
         announcement_obj = Announcement.query.get_or_404(ann_id)
@@ -79,7 +79,7 @@ def enable_is_seen(ann_id):
 
 
 @app.route('/api_1/submit/<int:ann_id>/d1v4r', methods=['GET'])
-@token_required
+# @token_required
 def enable_is_submit(ann_id):
     try:
         announcement_obj = Announcement.query.get_or_404(ann_id)
@@ -92,9 +92,24 @@ def enable_is_submit(ann_id):
         abort(500)
 
 
-@app.route('/api_1/search', methods=['GET', 'POST'])
+@app.route('/api_1/search/announcement', methods=['GET', 'POST'])
 # @token_required
 def search_announcement():
-    announcement_obj = Announcement.query.all()
+    query_list = []
+    parsejson = request.get_json()
+    size_amount_start = parsejson['size_amount_start']
+    size_amount_end = parsejson['size_amount_end']
+    type_ = parsejson['type']
+    place = parsejson['place']
+    # build_year = parsejson['build_year']
+    # rooms_num = parsejson['rooms_num']
+    # create_time = parsejson['create_time']
 
-    return jsonify(jsonify=[each.to_dict() for each in announcement_obj])
+    b = Announcement.query.filter_by(place=place)
+    query_list.append(b)
+    d = Announcement.query.filter(*query_list)
+    return jsonify(jsonify=[each.to_dict() for each in d])
+
+@app.route('/api_1/search/place', methods=['GET'])
+def search_place():
+    pass

@@ -38,7 +38,6 @@ class Announcement(db.Model):
     def __repr__(self):
         return '<Announcement {} {}>'.format(self.mobile_number, self.created_at)
 
-    @property
     def to_dict(self):
         data = {
             'id': self.id,

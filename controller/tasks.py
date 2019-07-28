@@ -3,6 +3,7 @@ import time
 import requests
 import json
 from random import randrange
+from unidecode import unidecode
 from controller import celery
 
 # Flask imports
@@ -10,6 +11,7 @@ from flask import request
 
 # Project imports
 from controller import db
+from controller.calculator import convert_rooms_to_number
 from controller.sms import SMSAdapter
 from controller.constant import *
 from model.announcement import Announcement
@@ -62,11 +64,13 @@ def scrape_tehran(body, sleep_from=10, sleep_to=20):
             token = each['token']
             if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
                 size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
+                size_amount = unidecode(str(size_amount))
             else:
                 size_amount = '0'
 
             if jsonify_new_url['widgets']['list_data'][value - 1]['title'] == 'تعداد اتاق':
                 rooms_num = jsonify_new_url['widgets']['list_data'][value - 1]['value']
+                rooms_num = convert_rooms_to_number(rooms_num)
             else:
                 rooms_num = 0
 
@@ -77,6 +81,7 @@ def scrape_tehran(body, sleep_from=10, sleep_to=20):
 
             if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
                 build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
+                build_year = unidecode(str(build_year))
             else:
                 build_year = 0
 
@@ -111,7 +116,6 @@ def scrape_tehran(body, sleep_from=10, sleep_to=20):
             }
 
             sending = requests.post(my_server_url, data=json.dumps(information), headers=headers)
-
             if sending.status_code == 201:
 
                 ann_id = sending.json()['ann_id']
@@ -125,7 +129,7 @@ def scrape_tehran(body, sleep_from=10, sleep_to=20):
                     scrape_tehran()
                     # change_local_ip()
             else:
-                print('error 500 occurred, please check this url', new_url)
+                print('error {} occurred, please check this url'.format(sending.status_code), new_url)
                 pass
 
         except Exception as e:
