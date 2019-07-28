@@ -95,7 +95,7 @@ def enable_is_submit(ann_id):
 @app.route('/api_1/search/announcement', methods=['GET', 'POST'])
 # @token_required
 def search_announcement():
-    '''
+    """
     {
         "size_amount_start": 100,
        "size_amount_end" : 200,
@@ -105,7 +105,7 @@ def search_announcement():
         "rooms_num":2
 
     }
-    '''
+    """
 
     parsejson = request.get_json()
     size_amount_start = parsejson['size_amount_start']
@@ -120,6 +120,11 @@ def search_announcement():
     return jsonify(jsonify=[each.to_dict() for each in ann_obj])
 
 
-@app.route('/api_1/search/place', methods=['GET'])
+@app.route('/api_1/search/place', methods=['POST'])
 def search_place():
-    pass
+    mylist = []
+    parsejson = request.get_json()
+    place = parsejson['place']
+    place_obj = Announcement.query.filter(Announcement.place.startswith(str(place))).all()
+    [mylist.append(each.place) if each.place not in mylist else None for each in place_obj]  # for remove duplicates
+    return jsonify(jsonify={"place": mylist}), 200
