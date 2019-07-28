@@ -24,7 +24,7 @@ def change_local_ip():
 
 
 # @celery.task()
-def scrape_tehran(body, sleep_from=10, sleep_to=20):
+def scrape_tehran(body, sleep_from, sleep_to):
     counter, value = 0, 6
 
     if body == 1:
@@ -40,8 +40,7 @@ def scrape_tehran(body, sleep_from=10, sleep_to=20):
 
     search_url = urls[0]
     adapter = SMSAdapter()
-    # my_server_url = 'http://193.176.240.42:8080/api_1/insert/d1v4r'
-    my_server_url = 'http://127.0.0.1:5000/api_1/insert/d1v4r'
+
     print('======================== button submitted ========================')
 
     first_request = requests.post(search_url, data=json.dumps(my_data), headers=headers)

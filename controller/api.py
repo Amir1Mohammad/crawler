@@ -61,7 +61,7 @@ def getting_data_from_localhost():
 
         return jsonify({'message': 'ok', "ann_id": announcement_obj.id}), 201
     except:
-        pass
+        return jsonify({'message': 'Error message'}), 500
 
 
 @app.route('/api_1/enable/<int:ann_id>/d1v4r', methods=['GET'])
@@ -95,20 +95,19 @@ def enable_is_submit(ann_id):
 @app.route('/api_1/search/announcement', methods=['GET', 'POST'])
 # @token_required
 def search_announcement():
-    query_list = []
+
     parsejson = request.get_json()
     size_amount_start = parsejson['size_amount_start']
     size_amount_end = parsejson['size_amount_end']
     type_ = parsejson['type']
     place = parsejson['place']
-    # build_year = parsejson['build_year']
-    # rooms_num = parsejson['rooms_num']
-    # create_time = parsejson['create_time']
+    build_year = parsejson['build_year']
+    rooms_num = parsejson['rooms_num']
 
-    b = Announcement.query.filter_by(place=place)
-    query_list.append(b)
-    d = Announcement.query.filter(*query_list)
-    return jsonify(jsonify=[each.to_dict() for each in d])
+    print(size_amount_start, size_amount_end, type_, place, build_year, rooms_num)
+    ann_obj = Announcement.query.filter_by(owner='شخصی', place=place)
+    return jsonify(jsonify=[each.to_dict() for each in ann_obj])
+
 
 @app.route('/api_1/search/place', methods=['GET'])
 def search_place():
