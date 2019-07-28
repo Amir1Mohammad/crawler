@@ -95,6 +95,17 @@ def enable_is_submit(ann_id):
 @app.route('/api_1/search/announcement', methods=['GET', 'POST'])
 # @token_required
 def search_announcement():
+    '''
+    {
+        "size_amount_start": 100,
+       "size_amount_end" : 200,
+        "type" : "ارائه",
+        "place":"سعادت‌آباد",
+        "build_year":1398,
+        "rooms_num":2
+
+    }
+    '''
 
     parsejson = request.get_json()
     size_amount_start = parsejson['size_amount_start']
