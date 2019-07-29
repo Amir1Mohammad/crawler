@@ -47,6 +47,7 @@ def crawler_manager():
         sleep_from = form.sleep_from.data
         sleep_to = form.sleep_to.data
         scrape_tehran(body, sleep_from, sleep_to)
+        # test(body, sleep_from, sleep_to)
         # scrape_tehran.apply_async()
 
     return render_template('basket.html', form=form)

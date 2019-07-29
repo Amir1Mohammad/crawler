@@ -26,7 +26,7 @@ def change_local_ip():
 # @celery.task()
 def scrape_tehran(body, sleep_from, sleep_to):
     counter, value = 0, 6
-
+    size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner = 0, 1370, 0, 0, 0, '', ''
     if body == 1:
         my_data = data_1
     elif body == 2:
@@ -61,33 +61,29 @@ def scrape_tehran(body, sleep_from, sleep_to):
             desc = jsonify_new_url['data']['share']['description']
             place = jsonify_new_url['widgets']['header']['place']
             token = each['token']
-            if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
-                size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
-                size_amount = unidecode(str(size_amount))
-            else:
-                size_amount = '0'
 
-            if jsonify_new_url['widgets']['list_data'][value - 1]['title'] == 'تعداد اتاق':
-                rooms_num = jsonify_new_url['widgets']['list_data'][value - 1]['value']
-                rooms_num = convert_rooms_to_number(rooms_num)
-            else:
-                rooms_num = 0
+            list_data = jsonify_new_url['widgets']['list_data']
 
-            if jsonify_new_url['widgets']['list_data'][value - 2]['title'] == 'آگهی‌دهنده':
-                owner = jsonify_new_url['widgets']['list_data'][value - 2]['value']
-            else:
-                owner = 'Not valid data' + jsonify_new_url['widgets']['list_data'][value - 2]['title']
+            for each_item in list_data:
+                if each_item['title'] == 'متراژ':
+                    size_amount = each_item['value']
+                    size_amount = unidecode(str(size_amount))
 
-            if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
-                build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
-                build_year = unidecode(str(build_year))
-            else:
-                build_year = 0
+                elif each_item['title'] == 'تعداد اتاق':
+                    rooms_num = each_item['value']
+                    rooms_num = convert_rooms_to_number(rooms_num)
 
-            if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
-                type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
-            else:
-                type_ = 'Not valid data' + jsonify_new_url['widgets']['list_data'][value - 4]['title']
+                elif each_item['title'] == 'آگهی‌دهنده':
+                    owner = each_item['value']
+
+                elif each_item['title'] == 'سال ساخت':
+                    build_year = each_item['value']
+                    build_year = unidecode(build_year)
+                    if build_year == 'qbl z 1370':
+                        build_year = 1370
+
+                elif each_item['title'] == 'نوع آگهی':
+                    type_ = each_item['value']
 
             try:
                 lat = jsonify_new_url['widgets']['location']['latitude']
@@ -129,8 +125,9 @@ def scrape_tehran(body, sleep_from, sleep_to):
                     # change_local_ip()
 
             else:
-                print('error {} occurred, please check this url'.format(sending.status_code), new_url)
-                pass
+                print('error {} occurred, check this url'.format(sending.status_code), new_url)
+                print(sending.content)
+                scrape_tehran(body, sleep_from, sleep_to)
 
         except Exception as e:
             if e == 'widgets':
@@ -143,3 +140,33 @@ def shutdown_server():
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
+
+
+### token until before list data upper than for
+# if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
+#     size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
+#     size_amount = unidecode(str(size_amount))
+# else:
+#     size_amount = '0'
+#
+# if jsonify_new_url['widgets']['list_data'][value - 1]['title'] == 'تعداد اتاق':
+#     rooms_num = jsonify_new_url['widgets']['list_data'][value - 1]['value']
+#     rooms_num = convert_rooms_to_number(rooms_num)
+# else:
+#     rooms_num = 0
+#
+# if jsonify_new_url['widgets']['list_data'][value - 2]['title'] == 'آگهی‌دهنده':
+#     owner = jsonify_new_url['widgets']['list_data'][value - 2]['value']
+# else:
+#     owner = 'Not valid data' + jsonify_new_url['widgets']['list_data'][value - 2]['title']
+#
+# if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
+#     build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
+#     build_year = unidecode(str(build_year))
+# else:
+#     build_year = 0
+#
+# if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
+#     type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
+# else:
+#     type_ = 'Not valid data' + jsonify_new_url['widgets']['list_data'][value - 4]['title']

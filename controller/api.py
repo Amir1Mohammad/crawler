@@ -60,8 +60,9 @@ def getting_data_from_localhost():
         print('<<<<<<<<', url, '||| Phone number is : {}'.format(phone_number))
 
         return jsonify({'message': 'ok', "ann_id": announcement_obj.id}), 201
-    except:
-        return jsonify({'message': 'Error message'}), 500
+    except Exception as error:
+        print(error)
+        return jsonify({'message': error}), 500
 
 
 @app.route('/api_1/enable/<int:ann_id>/d1v4r', methods=['GET'])
