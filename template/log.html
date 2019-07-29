@@ -7,27 +7,36 @@
 </head>
 <body>
 
+
 {% block content %}
+
     <h1>Log Details</h1>
     <br>
-    <div style="text-align: center">
-        {% for detail in log_obj %}
-            <div style="border:solid 1px gray; float:left;width:33%;margin:10px auto;border-radius: 4px;">
-                <p><b>create at date: {{ detail.created_at.year, detail.created_at.month, detail.created_at.day }}</b>
-                <p><b>create at time: {{ detail.created_at.hour, detail.created_at.minute, detail.created_at.second }}</b>
-                <p>ردیف : {{ detail.id }}</p>
-                <p>is_seen: {{ detail.is_seen }}</p>
-                <p>is_submit: {{ detail.is_submit }}</p>
-                </p>
-                <p>announcement_id : {{ detail.announcement_id }}</p>
-                <p>phone number :{{ my_file.mobile_number }}</p>
-                <p>place :{{ my_file.place }}</p>
-                <p>build year :{{ my_file.build_year }}</p>
-                <br>
+        <h2><p>
+        {% if prev_url %}
+            <a href="{{ prev_url }}">Newer</a>
+        {% endif %}
+        {% if next_url %}
+            <a href="{{ next_url }}">Older </a>
+        {% endif %}
+        </p></h2>
+    {% for post in posts %}
+        <p>id : {{ post.id }}</p>
+        <p>announcement_id : {{ post.announcement_id  }}</p>
+        <p>announcement_information : {{ post.information }}</p>
+        <p>is_seen : {{ post.is_seen }}</p>
+        <p>is_submit : {{ post.is_submit }}</p>
+        <p><b>create at date: {{ post.created_at.year, post.created_at.month, post.created_at.day }}</b>
+        <p><b>create at time: {{ post.created_at.hour, post.created_at.minute, post.created_at.second }}</b></p>
+        <p>year : {{ ann_obj.build_year }}</p>
+        <p>mobile number : {{ ann_obj.mobile_number}}</p>
+        <p>place : {{ ann_obj.place}}</p>
+        -------------------------------------
+    {% endfor %}
 
-            </div>
-        {% endfor %}
-    </div>
+
+
+
 {% endblock %}
 </body>
 </html>

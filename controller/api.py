@@ -97,13 +97,12 @@ def enable_is_submit(ann_id):
 def search_announcement():
     """
     {
-        "size_amount_start": 100,
+       "size_amount_start": 100,
        "size_amount_end" : 200,
-        "type" : "ارائه",
-        "place":"سعادت‌آباد",
-        "build_year":1398,
-        "rooms_num":2
-
+       "type" : "ارائه",
+       "place":"سعادت‌آباد",
+       "build_year":1398,
+       "rooms_num":2
     }
     """
 
@@ -121,10 +120,11 @@ def search_announcement():
 
 
 @app.route('/api_1/search/place', methods=['POST'])
+@cache.cached(timeout=360)
 def search_place():
     mylist = []
     parsejson = request.get_json()
     place = parsejson['place']
-    place_obj = Announcement.query.filter(Announcement.place.startswith(str(place))).all()
+    place_obj = Announcement.query.filter(Announcement.place.startswith(place)).all()
     [mylist.append(each.place) if each.place not in mylist else None for each in place_obj]  # for remove duplicates
     return jsonify(jsonify={"place": mylist}), 200

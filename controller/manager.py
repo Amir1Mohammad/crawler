@@ -1,7 +1,5 @@
 # Python imports
-
-from flask import render_template
-from flask import request, flash
+from flask import render_template, url_for, request, flash
 
 # Flask imports
 from flask_login import login_required
@@ -27,11 +25,14 @@ def index():
 @app.route('/log_file/', methods=['GET'])
 @login_required
 def retrieve_log():
-    log_obj = Log.query.order_by(desc(Log.created_at)).all()
-    for each in log_obj:
-        ann_obj = Announcement.query.get(each.announcement_id)
-
-    return render_template('log.html', log_obj=log_obj, my_file=ann_obj)
+    ann_obj = 0
+    page = request.args.get('page', 1, type=int)
+    logs = Log.query.order_by(Log.created_at.desc()).paginate(page, app.config['LOG_PER_PAGE'], False)  # True => 404
+    for each in logs.items:
+        ann_obj = Announcement.query.get_or_404(each.announcement_id)
+    next_url = url_for('retrieve_log', page=logs.next_num) if logs.has_next else None
+    prev_url = url_for('retrieve_log', page=logs.prev_num) if logs.has_prev else None
+    return render_template("log.html", posts=logs.items, next_url=next_url, prev_url=prev_url, ann_obj=ann_obj)
 
 
 @app.route('/scrape', methods=['GET', 'POST'])
