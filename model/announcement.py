@@ -18,7 +18,7 @@ class Announcement(db.Model):
     title = db.Column(db.Unicode, nullable=False)
     description = db.Column(db.Unicode, nullable=True)
     url = db.Column(db.String(256), nullable=True)
-    token = db.Column(db.String(32), nullable=False, unique=True)
+    token = db.Column(db.String(32), nullable=False)
     mobile_number = db.Column(db.String(13), nullable=True)
     owner = db.Column(db.Unicode, nullable=True)
     place = db.Column(db.Unicode, nullable=True)
@@ -28,10 +28,10 @@ class Announcement(db.Model):
     lat = db.Column(db.Float, nullable=True)
     long = db.Column(db.Float, nullable=True)
     has_loan = db.Column(db.Boolean, default=False)
-    size_amount = db.Column(db.Unicode, nullable=False)
+    size_amount = db.Column(db.Integer, nullable=False)
     type = db.Column(db.Unicode, nullable=False)
-    rooms_num = db.Column(db.Unicode, nullable=True, default=1)
-    build_year = db.Column(db.Unicode, nullable=True)
+    rooms_num = db.Column(db.Integer, nullable=True, default=1)
+    build_year = db.Column(db.Integer, nullable=True)
     market = db.Column(db.String(32), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
@@ -56,5 +56,7 @@ class Announcement(db.Model):
             'rooms_num': self.rooms_num,
             'build_year': self.build_year,
             'owner': self.owner,
+            'created_at': self.created_at
+
         }
         return data

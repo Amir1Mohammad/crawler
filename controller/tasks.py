@@ -26,7 +26,7 @@ def change_local_ip():
 # @celery.task()
 def scrape_tehran(body, sleep_from, sleep_to):
     counter, value = 0, 6
-    size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner = 0, 1370, 0, 0, 0, '', ''
+    # size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner = 0, 1370, 0, 0, 0, '', ''
     if body == 1:
         my_data = data_1
     elif body == 2:

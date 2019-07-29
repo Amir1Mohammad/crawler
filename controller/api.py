@@ -110,13 +110,19 @@ def search_announcement():
     parsejson = request.get_json()
     size_amount_start = parsejson['size_amount_start']
     size_amount_end = parsejson['size_amount_end']
-    type_ = parsejson['type']
+    # type_ = parsejson['type']
     place = parsejson['place']
-    build_year = parsejson['build_year']
-    rooms_num = parsejson['rooms_num']
+    build_year_start = parsejson['build_year_start']
+    build_year_end = parsejson['build_year_end']
+    # rooms_num = parsejson['rooms_num']
 
-    print(size_amount_start, size_amount_end, type_, place, build_year, rooms_num)
-    ann_obj = Announcement.query.filter_by(owner='شخصی', place=place)
+    size_amount = Announcement.query.filter(
+        Announcement.size_amount.between(size_amount_start, size_amount_end))
+
+    build_year = size_amount.filter(
+        Announcement.build_year.between(build_year_start, build_year_end))
+
+    ann_obj = build_year.filter_by(owner='شخصی', place=place).all()
     return jsonify(jsonify=[each.to_dict() for each in ann_obj])
 
 
