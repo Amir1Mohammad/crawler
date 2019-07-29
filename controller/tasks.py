@@ -125,8 +125,9 @@ def scrape_tehran(body, sleep_from, sleep_to):
                 counter += 1
                 if counter >= 24 or ann_id % 190 == 0:
                     print('Lets crawling again ...', end="\r")
-                    scrape_tehran()
+                    scrape_tehran(body, sleep_from, sleep_to)
                     # change_local_ip()
+
             else:
                 print('error {} occurred, please check this url'.format(sending.status_code), new_url)
                 pass
