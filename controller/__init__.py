@@ -18,6 +18,7 @@ __Author__ = "Amir Mohammad"
 
 app = Flask(__name__, template_folder='../template', static_folder='../static')
 app.config.from_object(Config)
+app.config.from_envvar('APP_SETTINGS')
 # bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

@@ -50,12 +50,33 @@ class SMSAdapter(object):
         else:
             data = {'status': 500}
 
+    def send_verified_message_token2(self, receptor, token, token2, template):
+        res = requests.post(
+            url=SEND_SMS_VERIFY,
+            data={
+                'receptor': receptor,
+                'token': token,
+                'token2': token2,
+                'template': template
+            }
+        )
+        res = json.loads(res.text)
+        if res['return'] and res['return']['status']:
+            data = {'status': res['return']['status']}
+        else:
+            data = {'status': 500}
+
     def send_link_divar(self, destination_number, ann_id):
         my_link = 'https://www.onlinejoo.com/new/' + str(ann_id)
         return self.send_verified_message(destination_number, my_link, 'AcceptAnnouncement')
 
+    def send_link_divar_with_place(self, destination_number, place, ann_id):
+        my_link = 'https://www.onlinejoo.com/new/' + str(ann_id)
+        return self.send_verified_message_token2(destination_number, place, my_link, 'AcceptAnnouncementPlace')
+
 
 if __name__ == '__main__':
     adapter = SMSAdapter()
-    adapter.send_link_divar('09128020911', '123654')
+    # adapter.send_link_divar('09128020911', '123654')
+    adapter.send_link_divar_with_place('09128020911', 'ایرانشهر', '123')
     print('message sent')

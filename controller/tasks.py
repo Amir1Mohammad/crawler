@@ -10,23 +10,19 @@ from controller import celery
 from flask import request
 
 # Project imports
-from controller import db
 from controller.calculator import convert_rooms_to_number
 from controller.sms import SMSAdapter
 from controller.constant import *
 from model.announcement import Announcement
 
+
 __Author__ = "Amir Mohammad"
-
-
-def change_local_ip():
-    pass
 
 
 # @celery.task()
 def scrape_tehran(body, sleep_from, sleep_to):
     counter, value = 0, 6
-    # size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner = 0, 1370, 0, 0, 0, '', ''
+    size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner, price = 0, 1370, 0, 0, 0, '', '', ''
     if body == 1:
         my_data = data_1
     elif body == 2:
@@ -85,6 +81,9 @@ def scrape_tehran(body, sleep_from, sleep_to):
                 elif each_item['title'] == 'نوع آگهی':
                     type_ = each_item['value']
 
+                elif each_item['title'] == 'قیمت':
+                    price = each_item['value']
+
             try:
                 lat = jsonify_new_url['widgets']['location']['latitude']
                 long = jsonify_new_url['widgets']['location']['latitude']
@@ -105,7 +104,7 @@ def scrape_tehran(body, sleep_from, sleep_to):
             information = {
                 "title": title, "description": desc, "place": place, "size_amount": size_amount,
                 "rooms_num": rooms_num, "owner": owner, "build_year": build_year, "type": type_,
-                "lat": lat, "long": long, "deposit_amount": deposit_amount, "rent": rent,
+                "lat": lat, "long": long, "deposit_amount": deposit_amount, "rent": rent, "price": price,
                 "phone_number": phone_number, "url": new_url, "market": "In divar", "token": token
 
             }
@@ -118,11 +117,13 @@ def scrape_tehran(body, sleep_from, sleep_to):
                       '| sms send to {}'.format(phone_number))
 
                 # adapter.send_link_divar(str(phone_number), str(ann_id))
+                # adapter.send_link_divar_with_place(str(phone_number), str(place), ann_id)
+
                 counter += 1
-                if counter >= 24 or ann_id % 190 == 0:
-                    print('Lets crawling again ...', end="\r")
+                if counter >= 24:
+                    print("======================== Let's crawling again ========================", end="\r")
                     scrape_tehran(body, sleep_from, sleep_to)
-                    # change_local_ip()
+
 
             else:
                 print('error {} occurred, check this url'.format(sending.status_code), new_url)
@@ -140,7 +141,6 @@ def shutdown_server():
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
-
 
 ### token until before list data upper than for
 # if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':

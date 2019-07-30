@@ -41,6 +41,7 @@ def getting_data_from_localhost():
         owner = parsejson['owner']
         type_ = parsejson['type']
         rent = parsejson['rent']
+        price = parsejson['price']
         place = parsejson['place']
         build_year = parsejson['build_year']
         lat = parsejson['lat']
@@ -53,7 +54,7 @@ def getting_data_from_localhost():
         announcement_obj = Announcement(title=title, description=desc, url=url, mobile_number=phone_number,
                                         size_amount=size_amount, owner=owner, type=type_, rent=rent, place=place,
                                         build_year=build_year, lat=lat, long=long, deposit_amount=deposit_amount,
-                                        rooms_num=rooms_num, market=market, token=token)
+                                        rooms_num=rooms_num, market=market, token=token, price=price)
 
         db.session.add(announcement_obj)
         db.session.commit()
