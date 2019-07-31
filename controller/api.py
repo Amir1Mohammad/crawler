@@ -13,6 +13,10 @@ from decorators import token_required
 __Author__ = "Amir Mohammad"
 
 
+def index(*args, **kwargs):
+    return kwargs
+
+
 @app.route('/api_1/<int:id>/d1v4r', methods=['GET', 'POST'])
 # @token_required
 def get_detail_announcement_from_divar(id):
@@ -107,24 +111,25 @@ def search_announcement():
        "rooms_num":2
     }
     """
-
+    kwargs = {}
     parsejson = request.get_json()
-    size_amount_start = parsejson['size_amount_start']
-    size_amount_end = parsejson['size_amount_end']
-    # type_ = parsejson['type']
+
+    type_ = parsejson['type']
+    kwargs.update({"type": type_}) if type_ != "null" else None
     place = parsejson['place']
-    build_year_start = parsejson['build_year_start']
-    build_year_end = parsejson['build_year_end']
-    # rooms_num = parsejson['rooms_num']
+    kwargs.update({"place": place}) if place != "null" else None
+    build_year = parsejson['build_year']
+    kwargs.update({"build_year": build_year}) if build_year != 0 else None
+    rooms_num = parsejson['rooms_num']
+    kwargs.update({"rooms_num": rooms_num}) if rooms_num != 0 else None
+    size_amount_start = parsejson['size_amount_start']
+    size_amount_start = 1 if size_amount_start == 0 else None
+    size_amount_end = parsejson['size_amount_end']
+    size_amount_end = 100000 if size_amount_end == 0 else None
 
-    size_amount = Announcement.query.filter(
-        Announcement.size_amount.between(size_amount_start, size_amount_end))
-
-    build_year = size_amount.filter(
-        Announcement.build_year.between(build_year_start, build_year_end))
-
-    ann_obj = build_year.filter_by(owner='شخصی', place=place).all()
-    return jsonify(jsonify=[each.to_dict() for each in ann_obj])
+    query_obj = Announcement.query.filter_by(**kwargs).\
+        filter(Announcement.size_amount.between(size_amount_start, size_amount_end)).all()
+    return jsonify(jsonify=[query.to_dict() for query in query_obj])
 
 
 @app.route('/api_1/search/place', methods=['POST'])
