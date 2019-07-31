@@ -91,9 +91,9 @@ def enable_is_submit(ann_id):
         abort(500)
 
 
-@app.route('/api_1/search/announcement', methods=['GET', 'POST'])
+@app.route('/api_1/search/announcement/<int:page>', methods=['GET', 'POST'])
 # @token_required
-def search_announcement():
+def search_announcement(page):
     """
     {
        "size_amount_start": 100,
@@ -121,7 +121,8 @@ def search_announcement():
     size_amount_end = 50000 if size_amount_end == 0 else size_amount_end
 
     query_obj = Announcement.query.filter_by(**kwargs). \
-        filter(Announcement.size_amount.between(size_amount_start, size_amount_end)).all()
+        filter(Announcement.size_amount.between(size_amount_start, size_amount_end)).\
+        paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items
 
     return jsonify(jsonify=[query.to_dict() for query in query_obj])
 
