@@ -1,10 +1,8 @@
 # Python imports
-import json
 
 # Flask imports
-from flask import jsonify, request, Response, abort
+from flask import jsonify, request, abort
 # Project imports
-from controller.sms import SMSAdapter
 from model.announcement import Announcement
 from model.user import Log
 from controller import app, cache, db
@@ -94,7 +92,7 @@ def enable_is_submit(ann_id):
 
 
 @app.route('/api_1/search/announcement', methods=['GET', 'POST'])
-@token_required
+# @token_required
 def search_announcement():
     """
     {
@@ -110,20 +108,21 @@ def search_announcement():
     json_parser = request.get_json()
 
     type_ = json_parser['type']
-    kwargs.update({"type": type_}) if type_ != "null" else None
+    kwargs.update({"type": type_}) if type_ != "null" else type_
     place = json_parser['place']
-    kwargs.update({"place": place}) if place != "null" else None
+    kwargs.update({"place": place}) if place != "null" else place
     build_year = json_parser['build_year']
-    kwargs.update({"build_year": build_year}) if build_year != 0 else None
+    kwargs.update({"build_year": build_year}) if build_year != 0 else build_year
     rooms_num = json_parser['rooms_num']
-    kwargs.update({"rooms_num": rooms_num}) if rooms_num != 0 else None
+    kwargs.update({"rooms_num": rooms_num}) if rooms_num != 0 else rooms_num
     size_amount_start = json_parser['size_amount_start']
-    size_amount_start = 1 if size_amount_start == 0 else None
+    size_amount_start = 1 if size_amount_start == 0 else size_amount_start
     size_amount_end = json_parser['size_amount_end']
-    size_amount_end = 100000 if size_amount_end == 0 else None
+    size_amount_end = 50000 if size_amount_end == 0 else size_amount_end
 
     query_obj = Announcement.query.filter_by(**kwargs). \
         filter(Announcement.size_amount.between(size_amount_start, size_amount_end)).all()
+
     return jsonify(jsonify=[query.to_dict() for query in query_obj])
 
 
