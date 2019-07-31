@@ -112,12 +112,11 @@ def scrape_tehran(body, sleep_from, sleep_to):
             sending = requests.post(my_server_url, data=json.dumps(information), headers=headers)
             if sending.status_code == 201:
 
-                ann_id = sending.json()['ann_id']
-                print('>>>>>>>>', ann_id, new_url, type_, owner, build_year, place,
+                announcement_id = sending.json()['announcement_id']
+                print('>>>>>>>>', announcement_id, new_url, type_, owner, build_year, place,
                       '| sms send to {}'.format(phone_number))
 
-                # adapter.send_link_divar(str(phone_number), str(ann_id))
-                # adapter.send_link_divar_with_place(str(phone_number), str(place), ann_id)
+                adapter.send_link_divar_with_place(phone_number, announcement_id, place)  # send sms
 
                 counter += 1
                 if counter >= 24:

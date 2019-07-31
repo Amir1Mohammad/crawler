@@ -18,7 +18,7 @@ def get_detail_announcement_from_divar(id):
 
 
 @app.route('/api_1/all/d1v4r/<int:page>', methods=['GET', 'POST'])
-# @token_required
+@token_required
 def get_announcement_estate_agent(page):
     announcement_obj = Announcement.query.order_by(Announcement.created_at.desc())
     paginate_obj = announcement_obj.paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items  # True return 404
@@ -26,7 +26,7 @@ def get_announcement_estate_agent(page):
 
 
 @app.route('/api_1/insert/d1v4r', methods=['POST'])
-@token_required
+# @token_required
 def getting_data_from_localhost():
     try:
         json_parser = request.get_json()
@@ -57,7 +57,7 @@ def getting_data_from_localhost():
         db.session.commit()
         print('<<<<<<<<', url, '||| Phone number is : {}'.format(phone_number))
 
-        return jsonify({'message': 'ok', "ann_id": announcement_obj.id}), 201
+        return jsonify({'message': 'ok', "announcement_id": announcement_obj.id}), 201
     except Exception as error:
         print(error)
         return jsonify({'message': error}), 500
@@ -92,7 +92,7 @@ def enable_is_submit(ann_id):
 
 
 @app.route('/api_1/search/announcement/<int:page>', methods=['GET', 'POST'])
-# @token_required
+@token_required
 def search_announcement(page):
     """
     {
