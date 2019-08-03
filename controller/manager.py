@@ -5,8 +5,6 @@ from flask import render_template, url_for, request, flash
 from flask_login import login_required
 
 # Project imports
-from sqlalchemy import desc
-
 from controller import app
 from controller.tasks import scrape_tehran, shutdown_server
 from form.crawl_option import OptionBazaar
@@ -47,8 +45,6 @@ def crawler_manager():
         sleep_from = form.sleep_from.data
         sleep_to = form.sleep_to.data
         scrape_tehran(body, sleep_from, sleep_to)
-        # test(body, sleep_from, sleep_to)
-        # scrape_tehran.apply_async()
 
     return render_template('basket.html', form=form)
 

@@ -15,7 +15,6 @@ from controller.sms import SMSAdapter
 from controller.constant import *
 from model.announcement import Announcement
 
-
 __Author__ = "Amir Mohammad"
 
 
