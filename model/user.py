@@ -45,7 +45,6 @@ class Log(db.Model):
     def __repr__(self):
         return '<Log {} {} {}>'.format(self.created_at, self.announcement_id, self.is_seen)
 
-
     def log_to_dict(self):
         data = {
             'id': self.id,

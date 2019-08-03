@@ -119,7 +119,7 @@ def scrape_tehran(body, sleep_from, sleep_to):
                 adapter.send_link_divar_with_place(phone_number, announcement_id, place)  # send sms
 
                 counter += 1
-                if counter >= 24:
+                if counter >= len(detail_first_request):
                     print("======================== Let's crawling again ========================", end="\r")
                     scrape_tehran(body, sleep_from, sleep_to)
 

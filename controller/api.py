@@ -105,7 +105,7 @@ def search_announcement(page):
        "rooms_num":2
     }
     """
-    kwargs = {}
+    kwargs = {"owner": 'شخصی'}
     json_parser = request.get_json()
 
     type_ = json_parser['type']
@@ -123,6 +123,7 @@ def search_announcement(page):
 
     query_obj = Announcement.query.filter_by(**kwargs). \
         filter(Announcement.size_amount.between(size_amount_start, size_amount_end)). \
+        order_by(Announcement.created_at.desc()). \
         paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items
 
     return jsonify(jsonify=[query.to_dict() for query in query_obj])
