@@ -58,9 +58,6 @@ def scrape_tehran(body, sleep_from, sleep_to):
             place = jsonify_new_url['widgets']['header']['place']
             token = each['token']
 
-            if token in token_list:
-                pass
-
             list_data = jsonify_new_url['widgets']['list_data']
 
             for each_item in list_data:
@@ -106,7 +103,7 @@ def scrape_tehran(body, sleep_from, sleep_to):
 
             information = {
                 "title": title, "description": desc, "place": place, "size_amount": size_amount,
-                "rooms_num": rooms_num, "owner": owner, "build_year": build_year, "type": type_,
+                "rooms_num": rooms_num, "owner": owner, "build_year": build_year, "type": type_,"body":body,
                 "lat": lat, "long": long, "deposit_amount": deposit_amount, "rent": rent, "price": price,
                 "phone_number": phone_number, "url": new_url, "market": "In divar", "token": token
 
@@ -119,7 +116,6 @@ def scrape_tehran(body, sleep_from, sleep_to):
                 print('>>>>>>>>', announcement_id, new_url, type_, owner, build_year, place,
                       '| sms send to {}'.format(phone_number))
 
-                token_list.append(token)
                 adapter.send_link_divar_with_place(phone_number, announcement_id, place)  # send sms
 
                 counter += 1

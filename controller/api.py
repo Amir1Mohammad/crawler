@@ -47,6 +47,7 @@ def getting_data_from_localhost():
         rooms_num = json_parser['rooms_num']
         market = json_parser['market']
         token = json_parser['token']
+        body = json_parser['body']
 
         announcement_obj = Announcement(title=title, description=desc, url=url, mobile_number=phone_number,
                                         size_amount=size_amount, owner=owner, type=type_, rent=rent, place=place,
@@ -55,7 +56,7 @@ def getting_data_from_localhost():
 
         db.session.add(announcement_obj)
         db.session.commit()
-        print('<<<<<<<<', url, '||| Phone number is : {}'.format(phone_number))
+        print('<<<<<<<<', url, '||| Phone number is : {} --- {} '.format(phone_number, body))
 
         return jsonify({'message': 'ok', "announcement_id": announcement_obj.id}), 201
     except Exception as error:
@@ -121,7 +122,7 @@ def search_announcement(page):
     size_amount_end = 50000 if size_amount_end == 0 else size_amount_end
 
     query_obj = Announcement.query.filter_by(**kwargs). \
-        filter(Announcement.size_amount.between(size_amount_start, size_amount_end)).\
+        filter(Announcement.size_amount.between(size_amount_start, size_amount_end)). \
         paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items
 
     return jsonify(jsonify=[query.to_dict() for query in query_obj])
