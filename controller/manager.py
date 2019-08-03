@@ -26,8 +26,7 @@ def retrieve_log():
     ann_obj = 0
     page = request.args.get('page', 1, type=int)
     logs = Log.query.order_by(Log.created_at.desc()).paginate(page, app.config['LOG_PER_PAGE'], False)  # True => 404
-    for each in logs.items:
-        ann_obj = Announcement.query.get_or_404(each.announcement_id)
+
     next_url = url_for('retrieve_log', page=logs.next_num) if logs.has_next else None
     prev_url = url_for('retrieve_log', page=logs.prev_num) if logs.has_prev else None
     return render_template("log.html", posts=logs.items, next_url=next_url, prev_url=prev_url, ann_obj=ann_obj)

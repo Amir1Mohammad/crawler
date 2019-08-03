@@ -26,5 +26,5 @@ data_4 = {"jsonrpc": "2.0", "id": 1, "method": "getPostList",
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 #########################################################################################
-# my_server_url = 'http://193.176.240.42:8080/api_1/insert/d1v4r'
-my_server_url = 'http://127.0.0.1:5000/api_1/insert/d1v4r'
+my_server_url = 'http://193.176.240.42:8080/api_1/insert/d1v4r'
+# my_server_url = 'http://127.0.0.1:5000/api_1/insert/d1v4r'

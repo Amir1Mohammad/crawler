@@ -21,6 +21,7 @@ __Author__ = "Amir Mohammad"
 # @celery.task()
 def scrape_tehran(body, sleep_from, sleep_to):
     counter, value = 0, 6
+    token_list = []
     size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner, price = 0, 1370, 0, 0, 0, '', '', ''
     if body == 1:
         my_data = data_1
@@ -56,6 +57,9 @@ def scrape_tehran(body, sleep_from, sleep_to):
             desc = jsonify_new_url['data']['share']['description']
             place = jsonify_new_url['widgets']['header']['place']
             token = each['token']
+
+            if token in token_list:
+                pass
 
             list_data = jsonify_new_url['widgets']['list_data']
 
@@ -115,6 +119,7 @@ def scrape_tehran(body, sleep_from, sleep_to):
                 print('>>>>>>>>', announcement_id, new_url, type_, owner, build_year, place,
                       '| sms send to {}'.format(phone_number))
 
+                token_list.append(token)
                 adapter.send_link_divar_with_place(phone_number, announcement_id, place)  # send sms
 
                 counter += 1

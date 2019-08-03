@@ -26,14 +26,14 @@
         <div style="width: 30%;border: solid 2px mediumvioletred;float:left;margin: 1%; border-radius: 7px;">
             <p>id : {{ post.id }}</p>
             <p>announcement_id : {{ post.announcement_id }}</p>
-            <p>Type : {{ ann_obj.type }}</p>
+{#            <p>Type : {{ ann_obj.type }}</p>#}
             <p>is_seen : {{ post.is_seen }}</p>
             <p>is_submit : {{ post.is_submit }}</p>
             <p><b>create at date: {{ post.created_at.year, post.created_at.month, post.created_at.day }}</b>
             <p><b>create at time: {{ post.created_at.hour, post.created_at.minute, post.created_at.second }}</b></p>
-            <p>year : {{ ann_obj.build_year }}</p>
-            <p>mobile number : {{ ann_obj.mobile_number }}</p>
-            <p>place : {{ ann_obj.place }}</p>
+{#            <p>year : {{ ann_obj.build_year }}</p>#}
+{#            <p>mobile number : {{ ann_obj.mobile_number }}</p>#}
+{#            <p>place : {{ ann_obj.place }}</p>#}
 
         </div>
     {% endfor %}
