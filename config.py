@@ -19,8 +19,8 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
     JSON_AS_ASCII = False
 
-    ANNOUNCEMENTS_PER_PAGE = 12
-    LOG_PER_PAGE = 9
+    ANNOUNCEMENTS_PER_PAGE = 15
+    LOG_PER_PAGE = 15
 
     CACHE_TYPE = "simple"  # Flask-Caching related configs
     CACHE_DEFAULT_TIMEOUT = 360

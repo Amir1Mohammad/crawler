@@ -12,7 +12,7 @@
 
     <h1>Log Details</h1>
     <br>
-    <h2><p>
+    <h2 style="margin-bottom: 50px;"><p>
         {% if prev_url %}
             <a href="{{ prev_url }}"
                style="border: 1px solid lawngreen; border-radius: 7px;color: black;padding: 10px 5px; text-decoration:none; background: powderblue">Newer</a>
@@ -22,23 +22,40 @@
                style="border: 1px solid lawngreen; border-radius: 7px;color: black;padding: 10px 5px; text-decoration:none; background: powderblue">Older</a>
         {% endif %}
     </p></h2>
-    {% for post in posts %}
-        <div style="width: 30%;border: solid 2px mediumvioletred;float:left;margin: 1%; border-radius: 7px;">
-            <p>id : {{ post.id }}</p>
-            <p>announcement_id : {{ post.announcement_id }}</p>
-{#            <p>Type : {{ ann_obj.type }}</p>#}
-            <p>is_seen : {{ post.is_seen }}</p>
-            <p>is_submit : {{ post.is_submit }}</p>
-            <p><b>create at date: {{ post.created_at.year, post.created_at.month, post.created_at.day }}</b>
-            <p><b>create at time: {{ post.created_at.hour, post.created_at.minute, post.created_at.second }}</b></p>
-{#            <p>year : {{ ann_obj.build_year }}</p>#}
-{#            <p>mobile number : {{ ann_obj.mobile_number }}</p>#}
-{#            <p>place : {{ ann_obj.place }}</p>#}
+    <table>
+        <thead style="background: #9e9e9e;line-height: 30px">
+        <th>ردبف</th>
+        <th>id</th>
 
-        </div>
-    {% endfor %}
+        <th>is seen</th>
+        <th>is submit</th>
+        <th>تاریخ</th>
+        <th>ساعت</th>
+        <th></th>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr style="background: #efefef;line-height: 30px;text-align: center">
+                <td style="padding: 5px;min-width: 80px">{{ post.id }}</td>
 
+                <td style="padding: 5px;min-width: 80px">{{ post.announcement_id }}</td>
 
+                <td style="padding: 5px;min-width: 80px">{{ post.is_seen }}</td>
+
+                <td style="padding: 5px;min-width: 80px">{{ post.is_submit }}</td>
+
+                <td style="padding: 5px;min-width: 80px">
+                    <b>{{ post.created_at.year }}/{{ post.created_at.month }}/{{ post.created_at.day }}</b>
+
+                <td style="padding: 5px;min-width: 80px">
+
+                    <b>{{ post.created_at.hour }}: {{ post.created_at.minute }}: {{ post.created_at.second }}</b></td>
+
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 </body>
 </html>

@@ -7,6 +7,7 @@ from model.announcement import Announcement
 from model.user import Log
 from controller import app, cache, db
 from decorators import token_required
+from controller.constant import word_filter_filing
 
 __Author__ = "Amir Mohammad"
 
@@ -20,7 +21,9 @@ def get_detail_announcement_from_divar(id):
 @app.route('/api_1/all/d1v4r/<int:page>', methods=['GET', 'POST'])
 @token_required
 def get_announcement_estate_agent(page):
-    announcement_obj = Announcement.query.order_by(Announcement.created_at.desc())
+    announcement_obj = Announcement.query.filter_by(owner='شخصی').\
+        filter(~Announcement.description.contains('مشاور')).\
+        order_by(Announcement.created_at.desc())
     paginate_obj = announcement_obj.paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items  # True return 404
     return jsonify(jsonify=[each.to_dict() for each in paginate_obj])
 
@@ -123,8 +126,14 @@ def search_announcement(page):
 
     query_obj = Announcement.query.filter_by(**kwargs). \
         filter(Announcement.size_amount.between(size_amount_start, size_amount_end)). \
+        filter(~Announcement.description.contains('مشاور')). \
         order_by(Announcement.created_at.desc()). \
         paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items
+
+    # for word in word_filter_filing:
+    #     for query in query_obj:
+    #         if word in query.description:
+    #             filter_id = query.id
 
     return jsonify(jsonify=[query.to_dict() for query in query_obj])
 
