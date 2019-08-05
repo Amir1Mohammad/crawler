@@ -20,7 +20,7 @@ class Config(object):
     JSON_AS_ASCII = False
 
     ANNOUNCEMENTS_PER_PAGE = 20
-    LOG_PER_PAGE = 15
+    LOG_PER_PAGE = 40
 
     CACHE_TYPE = "simple"  # Flask-Caching related configs
     CACHE_DEFAULT_TIMEOUT = 360
