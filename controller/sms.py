@@ -78,6 +78,6 @@ class SMSAdapter(object):
 if __name__ == '__main__':
     adapter = SMSAdapter()
     # adapter.send_link_divar('09128020911', '123654')
-    adapter.send_link_divar_with_place('09128020911', '123', 'سعادت آباد')
-    adapter.send_link_divar_with_place('09128020911', '123', 'ایرانشهر')
+    # adapter.send_link_divar_with_place('09128020911', '123', 'سعادت آباد')
+    # adapter.send_link_divar_with_place('09128020911', '123', 'ایرانشهر')
     print('message sent')

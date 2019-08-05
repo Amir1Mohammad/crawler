@@ -21,6 +21,7 @@ def get_detail_announcement_from_divar(id):
 @token_required
 @cache.memoize(timeout=360)
 def get_announcement_estate_agent(page):
+    # filter word handle on frontend
     announcement_obj = Announcement.query.filter_by(owner='شخصی'). \
         filter(~Announcement.description.contains('مشاور')). \
         order_by(Announcement.created_at.desc())

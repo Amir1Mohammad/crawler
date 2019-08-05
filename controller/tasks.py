@@ -21,7 +21,6 @@ __Author__ = "Amir Mohammad"
 # @celery.task()
 def scrape_tehran(body, sleep_from, sleep_to):
     counter, value = 0, 6
-    token_list = []
     size_amount, build_year, rooms_num, deposit_amount, rent, type_, owner, price = 0, 1370, 0, 0, 0, '', '', ''
     if body == 1:
         my_data = data_1
@@ -141,31 +140,3 @@ def shutdown_server():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
-### token until before list data upper than for
-# if jsonify_new_url['widgets']['list_data'][value]['title'] == 'متراژ':
-#     size_amount = jsonify_new_url['widgets']['list_data'][value]['value']
-#     size_amount = unidecode(str(size_amount))
-# else:
-#     size_amount = '0'
-#
-# if jsonify_new_url['widgets']['list_data'][value - 1]['title'] == 'تعداد اتاق':
-#     rooms_num = jsonify_new_url['widgets']['list_data'][value - 1]['value']
-#     rooms_num = convert_rooms_to_number(rooms_num)
-# else:
-#     rooms_num = 0
-#
-# if jsonify_new_url['widgets']['list_data'][value - 2]['title'] == 'آگهی‌دهنده':
-#     owner = jsonify_new_url['widgets']['list_data'][value - 2]['value']
-# else:
-#     owner = 'Not valid data' + jsonify_new_url['widgets']['list_data'][value - 2]['title']
-#
-# if jsonify_new_url['widgets']['list_data'][value - 3]['title'] == 'سال ساخت':
-#     build_year = jsonify_new_url['widgets']['list_data'][value - 3]['value']
-#     build_year = unidecode(str(build_year))
-# else:
-#     build_year = 0
-#
-# if jsonify_new_url['widgets']['list_data'][value - 4]['title'] == 'نوع آگهی':
-#     type_ = jsonify_new_url['widgets']['list_data'][value - 4]['value']
-# else:
-#     type_ = 'Not valid data' + jsonify_new_url['widgets']['list_data'][value - 4]['title']
