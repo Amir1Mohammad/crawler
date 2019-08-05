@@ -1,0 +1,1 @@
+scp -r ssh root@193.176.240.26:../opt/deploy/oj_services/storage/2019/7/estate/8222 .

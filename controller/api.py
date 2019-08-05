@@ -131,7 +131,7 @@ def search_announcement(page):
         order_by(Announcement.created_at.desc()). \
         paginate(page, app.config['ANNOUNCEMENTS_PER_PAGE'], False).items
 
-    return jsonify(jsonify=[query.to_dict() for query in query_obj])
+    return jsonify(jsonify=[query.to_dict() for query in query_obj]), 200
 
 
 @app.route('/api_1/search/place', methods=['POST'])

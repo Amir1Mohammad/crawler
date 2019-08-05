@@ -1,0 +1,5 @@
+1- Update remote branch list : $ git remote update origin --prune
+
+2- Delete remote branches : $ git push --delete origin <branch_name>
+
+3- Delete local branches : $ git branch -d <branch_name>

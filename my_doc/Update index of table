@@ -1,0 +1,1 @@
+SELECT setval('user_manager_user_id_seq', (select max(id) from user_manager_user), true);
