@@ -18,7 +18,7 @@ Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.0
 Flask-SuperAdmin==1.7.1
 Flask-WTF==0.14.2
-httpie==1.0.2
+httpie==1.0.3
 cython==0.29.13
 idna==2.8
 itsdangerous==1.1.0
